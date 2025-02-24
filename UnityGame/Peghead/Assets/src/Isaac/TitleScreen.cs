@@ -1,23 +1,38 @@
+using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TitleScreen : MonoBehaviour
 {
+    GameObject textLabel;
+    IEnumerator flashTextCoroutine;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SceneManager.LoadScene("TitleScreen");
-    }
-    
-    public void PressPlay()
-    {
-        SceneManager.LoadScene("LevelSelect");
+        textLabel = transform.Find("Text").gameObject;
+
+        flashTextCoroutine = FlashText();
+        StartCoroutine(flashTextCoroutine);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.anyKeyDown) {
+            StopCoroutine(flashTextCoroutine);
+            SceneManager.LoadScene("LevelSelect");
+        }
+    }
+
+    IEnumerator FlashText()
+    {
+        while (true)
+        {
+            textLabel.SetActive(!textLabel.activeInHierarchy);
+            yield return new WaitForSeconds(.75f);
+        }
     }
 }
