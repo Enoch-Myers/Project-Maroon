@@ -19,7 +19,7 @@ public class Finish_Line : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene("Tutorial_Boss");
+            SceneLoader.Instance.LoadSceneAsync("LevelSelect");
         }
     }
 }
