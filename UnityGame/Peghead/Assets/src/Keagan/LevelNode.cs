@@ -45,8 +45,13 @@ public class LevelNode : MonoBehaviour
 
     public void ActivateNode()
     {
-        Debug.Log("Starting Level: " + levelID);
+        if (!isLocked){
+            Debug.Log("Starting Level: " + levelID);
         StartCoroutine(TransitionLevel()); //weird unity interface functions require this being a new function
+        }else{
+            Debug.Log("Attempted to start locked level: " + levelID);
+        }
+        
     }
 
     private IEnumerator TransitionLevel() //this is where levels are loaded
