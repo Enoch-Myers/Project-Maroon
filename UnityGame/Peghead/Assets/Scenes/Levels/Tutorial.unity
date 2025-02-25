@@ -1591,7 +1591,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 6a7c8d1a338ca0d43a5dc51b6408869f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1731,8 +1731,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7.5
-  dashSpeed: 10
-  dashTime: 0.5
+  dashSpeed: 25
+  dashTime: 0.25
   deceleration: 0.5
   Jump: 500
   isJumping: 0
