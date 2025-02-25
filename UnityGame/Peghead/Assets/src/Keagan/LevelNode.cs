@@ -8,7 +8,7 @@ public class LevelNode : MonoBehaviour
     public string levelID;
     public bool isSelected = false;
     public bool isLocked = true;
-
+    
     private SpriteRenderer spriteRenderer;
     private Color defaultColor = Color.blue;
     private Color lockedColor = Color.red;
@@ -47,7 +47,8 @@ public class LevelNode : MonoBehaviour
     {
         if (!isLocked){
             Debug.Log("Starting Level: " + levelID);
-        StartCoroutine(TransitionLevel()); //weird unity interface functions require this being a new function
+            // StartCoroutine(TransitionLevel()); //weird unity interface functions require this being a new function
+            SceneLoader.Instance.LoadSceneAsync(levelID);
         }else{
             Debug.Log("Attempted to start locked level: " + levelID);
         }
