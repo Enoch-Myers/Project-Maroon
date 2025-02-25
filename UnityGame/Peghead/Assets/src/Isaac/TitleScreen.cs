@@ -8,13 +8,11 @@ public class TitleScreen : MonoBehaviour
 {
     GameObject textLabel;
     IEnumerator flashTextCoroutine;
-    SceneLoader sceneLoader;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         textLabel = transform.Find("Text").gameObject;
-        sceneLoader = FindFirstObjectByType<SceneLoader>();
         flashTextCoroutine = FlashText();
         StartCoroutine(flashTextCoroutine);
     }
@@ -24,7 +22,7 @@ public class TitleScreen : MonoBehaviour
     {
         if (Input.anyKeyDown) {
             StopCoroutine(flashTextCoroutine);
-            sceneLoader.LoadSceneAsync("LevelSelect");
+            SceneLoader.Instance.LoadSceneAsync("LevelSelect");
         }
     }
 
