@@ -153,8 +153,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00054932, y: 515}
-  m_SizeDelta: {x: 1920, y: 266.892}
+  m_AnchoredPosition: {x: 8.063995, y: 525.0814}
+  m_SizeDelta: {x: 2129.686, y: 287.054}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &129447764
 MonoBehaviour:
@@ -228,8 +228,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00001526, y: -461.83615}
-  m_SizeDelta: {x: 1920, y: 156.3276}
+  m_AnchoredPosition: {x: -1.1748, y: -433.583}
+  m_SizeDelta: {x: 2028.5, y: 165.163}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &248136901
 MonoBehaviour:
@@ -303,8 +303,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00001526, y: -158.45}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_AnchoredPosition: {x: -0.000020981, y: -135}
+  m_SizeDelta: {x: 2025.68, y: 1139.445}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &739498320
 MonoBehaviour:
@@ -497,8 +497,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000019073, y: 325.39}
-  m_SizeDelta: {x: 1473.7632, y: 550.77}
+  m_AnchoredPosition: {x: 0.000019073, y: 280.86}
+  m_SizeDelta: {x: 1473.763, y: 461.72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &867679901
 MonoBehaviour:
@@ -611,7 +611,6 @@ GameObject:
   - component: {fileID: 1522384321}
   - component: {fileID: 1522384320}
   - component: {fileID: 1522384323}
-  - component: {fileID: 1522384324}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -737,20 +736,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!114 &1522384324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1522384319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b41c5ab6990134d4c926b7d881b01652, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shader: {fileID: 4800000, guid: e2259f56194f40f41b237f12ab073de0, type: 3}
-  material: {fileID: 0}
 --- !u!1 &1524308729
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,8 +770,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00001527, y: -430}
-  m_SizeDelta: {x: 1920, y: 171.6079}
+  m_AnchoredPosition: {x: -2.912, y: -423.08}
+  m_SizeDelta: {x: 2031.9, y: 177.295}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1524308731
 MonoBehaviour:
@@ -1086,12 +1071,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1165,6 +1150,14 @@ PrefabInstance:
     - target: {fileID: 2232910949477379939, guid: 6ab276ac898a87140a2fc3ecafd997de, type: 3}
       propertyPath: m_Name
       value: SceneLoader
+      objectReference: {fileID: 0}
+    - target: {fileID: 6236623692408629115, guid: 6ab276ac898a87140a2fc3ecafd997de, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1083.821
+      objectReference: {fileID: 0}
+    - target: {fileID: 6236623692408629115, guid: 6ab276ac898a87140a2fc3ecafd997de, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.911
       objectReference: {fileID: 0}
     - target: {fileID: 6800468546563361760, guid: 6ab276ac898a87140a2fc3ecafd997de, type: 3}
       propertyPath: m_LocalPosition.x
