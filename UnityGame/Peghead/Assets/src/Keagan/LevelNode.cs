@@ -7,15 +7,24 @@ public class LevelNode : MonoBehaviour
     public LevelNode up = null, down = null, left = null, right = null; //pointers to neighbors in a specific direction
     public string levelID;
     public bool isSelected = false;
+    public bool isLocked = true;
 
     private SpriteRenderer spriteRenderer;
-    private Color defaultColor = Color.red;
-    public Color selectedColor = Color.blue; //when highlighted
+    private Color defaultColor = Color.blue;
+    private Color lockedColor = Color.red;
+    private Color selectedColor = Color.green;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        defaultColor = spriteRenderer.color;
+        //defaultColor = spriteRenderer.color;
+        spriteRenderer.color = lockedColor;
+        if (!isLocked) {
+            spriteRenderer.color = defaultColor;
+        }
+        if (isSelected) {
+            spriteRenderer.color = selectedColor;
+        }
     }
 
     public void SelectNode()
@@ -27,19 +36,23 @@ public class LevelNode : MonoBehaviour
     public void DeselectNode()
     {
         isSelected = false;
-        spriteRenderer.color = defaultColor;
+        if (isLocked){
+            spriteRenderer.color = lockedColor;
+        }else{
+            spriteRenderer.color = defaultColor;
+        }
     }
 
     public void ActivateNode()
     {
         Debug.Log("Starting Level: " + levelID);
-        StartCoroutine(FadeToBlackAndLoadLevel());
+        StartCoroutine(TransitionLevel()); //weird unity interface functions require this being a new function
     }
 
-    private IEnumerator FadeToBlackAndLoadLevel()
+    private IEnumerator TransitionLevel() //this is where levels are loaded
     {
         //insert transition call on this line
         yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(levelID);
+        //SceneManager.LoadScene(levelID);
     }
 }
