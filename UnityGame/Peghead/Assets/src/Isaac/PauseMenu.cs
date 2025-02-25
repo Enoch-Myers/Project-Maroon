@@ -54,6 +54,7 @@ public class PauseMenu : MonoBehaviour
                 SceneLoader.Instance.LoadSceneAsync(SceneManager.GetActiveScene().name);
                 break;
             case "Exit":
+                Resume();
                 SceneLoader.Instance.LoadSceneAsync("LevelSelect");
                 break;
             default:
