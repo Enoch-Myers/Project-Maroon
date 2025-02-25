@@ -10,7 +10,9 @@ public class SceneLoader : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        print(SceneManager.GetActiveScene().name);
         if (SceneManager.GetActiveScene().name != "TitleScreen") {
+            print("Ending scene transition");
             transition.SetTrigger("End");
         }
     }
