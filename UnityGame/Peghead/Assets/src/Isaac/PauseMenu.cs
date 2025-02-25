@@ -8,8 +8,6 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        print("start pasue menu");
-
         pauseMenuUI.SetActive(false);
 
         // Loop through all child objects under the "Options" parent
@@ -36,7 +34,6 @@ public class PauseMenu : MonoBehaviour
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            print("Click");
             if (pauseMenuUI.activeInHierarchy) {
                 Resume();
             } else {
