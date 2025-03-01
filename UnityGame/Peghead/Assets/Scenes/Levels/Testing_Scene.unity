@@ -1961,8 +1961,10 @@ MonoBehaviour:
   dashSpeed: 15
   dashTime: 0.25
   deceleration: 1
+  Move: 0
   Jump: 500
   isJumping: 0
+  rb: {fileID: 0}
 --- !u!114 &1538248482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2325,7 +2327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8434969788822645321, guid: 1dcf1117e40126548a20b424b498601f, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: TestEnemy1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
