@@ -6,25 +6,34 @@ using UnityEngine.SceneManagement;
 
 public class TitleScreen : MonoBehaviour
 {
+    private bool isTextFlashing = true;
     GameObject textLabel;
     IEnumerator flashTextCoroutine;
-    SceneLoader sceneLoader;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         textLabel = transform.Find("Text").gameObject;
-        sceneLoader = FindFirstObjectByType<SceneLoader>();
         flashTextCoroutine = FlashText();
         StartCoroutine(flashTextCoroutine);
+    }
+
+    public void OnAnyButtonPress()
+    {
+        if (!isTextFlashing) {
+            return;
+        }
+        isTextFlashing = false;
+
+        StopCoroutine(flashTextCoroutine);
+        SceneLoader.Instance.LoadSceneAsync("LevelSelect");
     }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.anyKeyDown) {
-            StopCoroutine(flashTextCoroutine);
-            sceneLoader.LoadSceneAsync("LevelSelect");
+            OnAnyButtonPress();
         }
     }
 
