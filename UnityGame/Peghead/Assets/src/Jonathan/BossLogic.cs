@@ -6,13 +6,13 @@ public class NewMonoBehaviourScript : MonoBehaviour
     public float speed = 2f;
 
     public int maxHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
 
     public int CurrentHealth{
         get { return currentHealth; }
     }
 
-    void Start(){
+    public void Start(){
         currentHealth = maxHealth;
     }
 
