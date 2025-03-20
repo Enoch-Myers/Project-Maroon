@@ -1,111 +1,77 @@
 using System.Collections;
+using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools;
 
-public class player_movement : MonoBehaviour
+public class PlayerMovementTests
 {
-    public float speed;
-    public float dashSpeed;
-    public float dashTime;
-    public float deceleration;
-    private float dashTimeLeft;
-    private bool isDashing;
+    private GameObject player;
+    private player_movement playerMovementScript;
 
-    public float Move;
-    private float lastMoveDirection = 1f;
-    public float Jump;
-    public bool isJumping;
-    public Rigidbody2D rb;
-    public bool isTouchingWall;
-    public float minX = -10f; // Left boundary
-p   ublic float maxX = 10f;  // Right boundary
-    public float minY = -5f;  // Bottom boundary
-    public float maxY = 5f;   // Top boundary
-
-
-    void Start()
+    [SetUp]
+    public void SetUp()
     {
-        rb = GetComponent<Rigidbody2D>();
+        // Create a test player GameObject and add the player_movement script
+        player = new GameObject("TestPlayer");
+        playerMovementScript = player.AddComponent<player_movement>();
+
+        Rigidbody2D rb = player.AddComponent<Rigidbody2D>();
+        playerMovementScript.rb = rb;
+
+        playerMovementScript.speed = 5f;
+        playerMovementScript.dashSpeed = 10f;
+        playerMovementScript.dashTime = 0.5f;
+        playerMovementScript.deceleration = 0.9f;
+        playerMovementScript.minX = -10f;
+        playerMovementScript.maxX = 10f;
+        playerMovementScript.minY = -5f;
+        playerMovementScript.maxY = 5f;
     }
 
-void Update()
-{
-    Move = Input.GetAxis("Horizontal");
-
-    if (Move != 0)
+    [Test]
+    public void PlayerStartsWithinBoundaries()
     {
-        lastMoveDirection = Mathf.Sign(Move);
+        // make sure the player starts inside the defined boundary
+        Vector3 startPosition = player.transform.position;
+        Assert.IsTrue(startPosition.x >= playerMovementScript.minX && startPosition.x <= playerMovementScript.maxX);
+        Assert.IsTrue(startPosition.y >= playerMovementScript.minY && startPosition.y <= playerMovementScript.maxY);
     }
 
-    if (isDashing)
+    [UnityTest]
+    public IEnumerator PlayerStaysWithinBoundaries()
     {
-        dashTimeLeft -= Time.deltaTime;
-        if (dashTimeLeft <= 0)
-        {
-            isDashing = false;
-            StartDeceleration();
-        }
-    }
-    else
-    {
-        rb.linearVelocity = new Vector2(speed * Move, rb.linearVelocity.y);
+        player.transform.position = new Vector3(-15f, 0f, 0f); // Position outside left boundary
+        yield return null;
+        Assert.AreEqual(player.transform.position.x, playerMovementScript.minX);
 
-        if (Input.GetButtonDown("Jump") && isJumping == false)
-        {
-            rb.AddForce(new Vector2(rb.linearVelocity.x, Jump));
-            Debug.Log("Jump");
-        }
+        player.transform.position = new Vector3(15f, 0f, 0f); // Position outside right boundary
+        yield return null;
+        Assert.AreEqual(player.transform.position.x, playerMovementScript.maxX);
 
-        if (Input.GetButtonDown("Dash"))
-        {
-            StartDash();
-        }
+        player.transform.position = new Vector3(0f, -10f, 0f); // Position outside bottom boundary
+        yield return null;
+        Assert.AreEqual(player.transform.position.y, playerMovementScript.minY);
+
+        player.transform.position = new Vector3(0f, 10f, 0f); // Position outside top boundary
+        yield return null;
+        Assert.AreEqual(player.transform.position.y, playerMovementScript.maxY);
     }
 
-    // Clamping the player's position to defined boundaries
-    transform.position = new Vector3(
-        Mathf.Clamp(transform.position.x, minX, maxX),
-        Mathf.Clamp(transform.position.y, minY, maxY),
-        transform.position.z
-    );
-}
-
-
-    public void StartDash()
+    [UnityTest]
+    public IEnumerator PlayerDashesCorrectly()
     {
-        isDashing = true;
-        dashTimeLeft = dashTime;
-        rb.linearVelocity = new Vector2(dashSpeed * lastMoveDirection, rb.linearVelocity.y);
+        // Set the player to dash and verify the dash behavior
+        playerMovementScript.StartDash();
+        yield return new WaitForSeconds(playerMovementScript.dashTime);
+
+        Assert.IsFalse(playerMovementScript.isDashing);
+
+        Assert.AreEqual(0f, playerMovementScript.rb.linearVelocity.x, 0.1f);
     }
 
-    void StartDeceleration()
+    [TearDown]
+    public void TearDown()
     {
-        StartCoroutine(Decelerate());
-    }
-
-    IEnumerator Decelerate()
-    {
-        while (Mathf.Abs(rb.linearVelocity.x) > 0.1f)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x * deceleration, rb.linearVelocity.y);
-            yield return null;
-        }
-
-        rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-    }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Ground"))
-        {
-            isJumping = false;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Ground"))
-        {
-            isJumping = true;
-        }
+        GameObject.Destroy(player);
     }
 }
