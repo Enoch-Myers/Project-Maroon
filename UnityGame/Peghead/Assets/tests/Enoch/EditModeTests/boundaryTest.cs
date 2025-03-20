@@ -5,8 +5,8 @@ using UnityEngine.TestTools;
 
 public class PlayerMovementTests
 {
-    private GameObject player;
-    private player_movement playerMovementScript;
+    public GameObject player;
+    public player_movement playerMovementScript;
 
     [SetUp]
     public void SetUp()

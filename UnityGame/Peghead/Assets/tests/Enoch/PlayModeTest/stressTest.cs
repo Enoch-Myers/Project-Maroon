@@ -5,8 +5,8 @@ using UnityEngine.TestTools;
 
 public class DashingStressTest
 {
-    private GameObject player;
-    private player_movement playerMovementScript;
+    public GameObject player;
+    public player_movement playerMovementScript;
 
     [SetUp]
     public void SetUp()
