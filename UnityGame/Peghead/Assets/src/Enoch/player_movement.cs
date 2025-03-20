@@ -15,6 +15,7 @@ public class player_movement : MonoBehaviour
     public float Jump;
     public bool isJumping;
     public Rigidbody2D rb;
+    public bool isTouchingWall;
 
     void Start()
     {
