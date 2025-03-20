@@ -14,8 +14,12 @@ public class LevelSelectManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return)) currentNode.ActivateNode();
     }
 
-    void MoveToNode(LevelNode newNode)
+    public void MoveToNode(LevelNode newNode)
     {
+        if (newNode == null) {
+            return;
+        }
+        
         currentNode.DeselectNode();
         currentNode = newNode;
         currentNode.SelectNode();

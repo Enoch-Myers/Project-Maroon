@@ -17,12 +17,17 @@ public class TitleScreen : MonoBehaviour
         StartCoroutine(flashTextCoroutine);
     }
 
+    public void OnAnyButtonPress()
+    {
+        StopCoroutine(flashTextCoroutine);
+        SceneLoader.Instance.LoadSceneAsync("LevelSelect");
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Input.anyKeyDown) {
-            StopCoroutine(flashTextCoroutine);
-            SceneLoader.Instance.LoadSceneAsync("LevelSelect");
+            OnAnyButtonPress();
         }
     }
 

@@ -1,5 +1,5 @@
 {
-    "name": "EditMode",
+    "name": "JoshEditModeTests",
     "rootNamespace": "",
     "references": [
         "UnityEngine.TestRunner",
