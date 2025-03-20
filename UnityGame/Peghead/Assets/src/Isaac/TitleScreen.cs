@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class TitleScreen : MonoBehaviour
 {
+    private bool isTextFlashing = true;
     GameObject textLabel;
     IEnumerator flashTextCoroutine;
 
@@ -17,12 +18,22 @@ public class TitleScreen : MonoBehaviour
         StartCoroutine(flashTextCoroutine);
     }
 
+    public void OnAnyButtonPress()
+    {
+        if (!isTextFlashing) {
+            return;
+        }
+        isTextFlashing = false;
+
+        StopCoroutine(flashTextCoroutine);
+        SceneLoader.Instance.LoadSceneAsync("LevelSelect");
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Input.anyKeyDown) {
-            StopCoroutine(flashTextCoroutine);
-            SceneLoader.Instance.LoadSceneAsync("LevelSelect");
+            OnAnyButtonPress();
         }
     }
 
