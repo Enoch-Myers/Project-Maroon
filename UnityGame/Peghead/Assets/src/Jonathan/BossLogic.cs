@@ -29,6 +29,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     }
 
     public void TakeDamage(int damageAmount){
+        currentHealth-=damageAmount;
         if(currentHealth < 0) currentHealth = 0;
 
         if(currentHealth == 0) Debug.Log("Boss defeated!");
