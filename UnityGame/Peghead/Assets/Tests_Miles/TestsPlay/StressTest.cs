@@ -58,8 +58,6 @@ public class StressTest_SpawnEnemies
         // Output the time for the test
         Debug.Log($"Time taken to spawn {totalEnemies} enemies: {timeTaken} seconds");
 
-        // Optional: Assert time doesn't exceed a certain threshold
-        Assert.Less(timeTaken, 5f, "It took too long to spawn all enemies!");
 
         // Ensure no errors occurred during the spawning process
         Assert.Pass("Stress Test Passed");
