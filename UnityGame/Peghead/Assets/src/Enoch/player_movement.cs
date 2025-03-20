@@ -10,18 +10,18 @@ public class player_movement : MonoBehaviour
     private float dashTimeLeft;
     private bool isDashing;
 
-    private float Move;
+    public float Move;
     private float lastMoveDirection = 1f;
     public float Jump;
     public bool isJumping;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    public void Update()
     {
         Move = Input.GetAxis("Horizontal");
 
@@ -56,7 +56,7 @@ public class player_movement : MonoBehaviour
         }
     }
 
-    void StartDash()
+    public void StartDash()
     {
         isDashing = true;
         dashTimeLeft = dashTime;

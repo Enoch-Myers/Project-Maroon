@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 178596206732283113}
   - component: {fileID: 3336005069002737661}
   - component: {fileID: 2657432751318514864}
-  - component: {fileID: 366053960447845785}
+  - component: {fileID: -7645722199298048588}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -163,7 +163,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &366053960447845785
+--- !u!114 &-7645722199298048588
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,9 +172,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8434969788822645321}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35c097d0ea412714dacdbd471fab172d, type: 3}
+  m_Script: {fileID: 11500000, guid: 64c5276b961846045917b1c49e7532b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointA: {fileID: 8978879515335313939, guid: cbf670fba5a4fd4489b62010a63924f0, type: 3}
-  pointB: {fileID: 4857523856587910118, guid: ff464f5828f72bd4ca8da5a71dc97c04, type: 3}
-  speed: 2
+  patrolSpeed: 2
+  chaseSpeed: 3
+  patrolRange: 5
+  detectionRange: 4
+  attackRange: 1
+  health: 3
+  attackCooldown: 1.5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  attackPoint: {fileID: 0}
+  attackRadius: 0.5
