@@ -13,7 +13,6 @@ public class TitleScreen : MonoBehaviour
     void Start()
     {
         textLabel = transform.Find("Text").gameObject;
-
         flashTextCoroutine = FlashText();
         StartCoroutine(flashTextCoroutine);
     }
@@ -23,7 +22,7 @@ public class TitleScreen : MonoBehaviour
     {
         if (Input.anyKeyDown) {
             StopCoroutine(flashTextCoroutine);
-            SceneManager.LoadScene("LevelSelect");
+            SceneLoader.Instance.LoadSceneAsync("LevelSelect");
         }
     }
 

@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class Finish_Line : MonoBehaviour
 {
+    public string nextSceneName;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,7 +21,7 @@ public class Finish_Line : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene("Tutorial_Boss");
+            SceneLoader.Instance.LoadSceneAsync(nextSceneName);
         }
     }
 }
