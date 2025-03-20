@@ -3,7 +3,7 @@ using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
 
-public class LevelSelectTests
+public class MovementTest
 {
     private LevelSelectManager levelSelect;
     private LevelNode testNodeA, testNodeB;
