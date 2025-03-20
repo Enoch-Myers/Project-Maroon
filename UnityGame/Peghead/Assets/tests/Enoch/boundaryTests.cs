@@ -11,7 +11,6 @@ public class PlayerMovementTests
     [SetUp]
     public void SetUp()
     {
-        // Create a test player GameObject and add the player_movement script
         player = new GameObject("TestPlayer");
         playerMovementScript = player.AddComponent<player_movement>();
 
