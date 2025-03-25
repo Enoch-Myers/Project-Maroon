@@ -27,7 +27,8 @@ public class stress
     [Test]
     public void BossHealth_RepeatedDamageStressTest()
     {
-        for(int i = 0; i < 1000; i++) BossLogic.TakeDamage(1);
+        int count = 0;
+        for(int i = 0; i < 1000; i++, count++)BossLogic.TakeDamage(1);
         Assert.AreEqual(0, BossLogic.CurrentHealth);
     }
 }

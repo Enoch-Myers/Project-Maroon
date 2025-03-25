@@ -1,36 +1,35 @@
 using UnityEngine;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+//Parent Class other bosses inherit from
+public class BaseBoss : MonoBehaviour
 {
     public Transform player;
     public float speed = 2f;
-
     public int maxHealth = 100;
-    public int currentHealth;
+    protected int currentHealth;
 
     public int CurrentHealth{
-        get { return currentHealth; }
+        get{ return currentHealth; }
     }
 
-    public void Start(){
+    public virtual void Start(){
         currentHealth = maxHealth;
     }
 
-    void Update(){
-        // Basic "follow/avoid" logic if player is assigned
+    public virtual void Update(){
         if(player != null){
             if(transform.position.x < player.position.x){
                 transform.position += Vector3.right * speed * Time.deltaTime;
-            }
-            else if(transform.position.x > player.position.x){
+            }else if(transform.position.x > player.position.x){
                 transform.position += Vector3.left * speed * Time.deltaTime;
             }
         }
     }
 
-    public void TakeDamage(int damageAmount){
+    public virtual void TakeDamage(int damageAmount){
+        currentHealth -= damageAmount;
         if(currentHealth < 0) currentHealth = 0;
-
-        if(currentHealth == 0) Debug.Log("Boss defeated!");
+        
+        if (currentHealth == 0) Debug.Log("Boss defeated: " + gameObject.name);
     }
 }
