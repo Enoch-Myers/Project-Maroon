@@ -8,7 +8,7 @@ using UnityEngine.TestTools;
 public class CircleWipeTestsEditor
 {
     [SetUp]
-    public void SetUp()
+    public void SetUp() 
     {
         // Load the scene before running the test
         EditorSceneManager.OpenScene("Assets/Scenes/TitleScreen.unity");

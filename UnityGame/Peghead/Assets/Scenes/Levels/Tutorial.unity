@@ -119,6 +119,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &118078299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 118078300}
+  - component: {fileID: 118078301}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &118078300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118078299}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1043.8701, y: 361.6276, z: -7.138914}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &118078301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118078299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8b681e6df927c4c9f80ff965f8969d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dieWinScreenPrefab: {fileID: 7812145986646528526, guid: 41faec09b458eb6489bacdf5f590d35d, type: 3}
+  levelHUDPrefab: {fileID: 8372038992068447781, guid: 0e0547d1391f61d48810c51460dbee90, type: 3}
 --- !u!1 &164252688
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,6 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5958497a1cad1fa43a6c330990b2b48f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextSceneName: 
 --- !u!61 &225289428
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1639,6 +1686,7 @@ GameObject:
   - component: {fileID: 1538248477}
   - component: {fileID: 1538248480}
   - component: {fileID: 1538248481}
+  - component: {fileID: 1538248482}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -1802,8 +1850,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7.5
+  dashSpeed: 0
+  dashTime: 0
+  deceleration: 0
+  Move: 0
   Jump: 500
   isJumping: 0
+  rb: {fileID: 0}
+--- !u!114 &1538248482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538248476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 455d1da42deb3c44ead7fee74fbbee0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLives: 3
 --- !u!1 &1567385106
 GameObject:
   m_ObjectHideFlags: 0
@@ -2655,3 +2721,4 @@ SceneRoots:
   - {fileID: 485163599}
   - {fileID: 2109388005}
   - {fileID: 2036908736}
+  - {fileID: 118078300}
