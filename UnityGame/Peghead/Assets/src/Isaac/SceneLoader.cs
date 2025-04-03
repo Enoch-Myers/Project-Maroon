@@ -26,7 +26,6 @@ public class SceneLoader : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        print(scene.name + " loaded");
         if (scene.name != "TitleScreen") {
             cutoutMask.enabled = false; // Fixes a bug preventing the circle from rendering on a new scene loading
             cutoutMask.enabled = true;
@@ -51,7 +50,6 @@ public class SceneLoader : MonoBehaviour
 
     IEnumerator LoadScene(string sceneName)
     {
-        print("Start circle wipe transition");
         transition.SetTrigger("Start");
 
         yield return new WaitForSeconds(transitionTime);
