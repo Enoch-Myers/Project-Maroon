@@ -17,6 +17,8 @@ public abstract class EnemyAI : MonoBehaviour
     protected bool isDead = false;
 
     private Transform currentPatrolTarget;
+    private float playerLostCooldown = 1f; // Time to wait before resuming patrol
+    private float timeSincePlayerLost = 0f;
 
     protected virtual void Start()
     {
@@ -25,7 +27,7 @@ public abstract class EnemyAI : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
-        // Initialize patrol target
+        // Initialize patrol target to Point A
         currentPatrolTarget = patrolPointA;
     }
 
@@ -35,11 +37,26 @@ public abstract class EnemyAI : MonoBehaviour
 
         if (PlayerDetected())
         {
-            Attack();
+            // Chase the player
+            ChasePlayer();
+            timeSincePlayerLost = 0f; // Reset cooldown
         }
         else
         {
-            Patrol();
+            // Increment cooldown timer
+            timeSincePlayerLost += Time.deltaTime;
+
+            if (timeSincePlayerLost >= playerLostCooldown)
+            {
+                // Reset patrol target to the nearest point
+                if (currentPatrolTarget == null || Vector2.Distance(transform.position, currentPatrolTarget.position) > 0.1f)
+                {
+                    currentPatrolTarget = GetNearestPatrolPoint();
+                }
+
+                // Resume patrolling
+                Patrol();
+            }
         }
     }
 
@@ -52,12 +69,20 @@ public abstract class EnemyAI : MonoBehaviour
         // Move towards the current patrol target
         transform.position = Vector2.MoveTowards(transform.position, currentPatrolTarget.position, moveSpeed * Time.deltaTime);
 
-        // Check if the enemy has reached the current patrol target
-        if (Vector2.Distance(transform.position, currentPatrolTarget.position) < 0.1f)
+        // Check if the enemy is close enough to the current patrol target
+        if (Vector2.Distance(transform.position, currentPatrolTarget.position) <= 0.1f)
         {
             // Switch to the other patrol target
             currentPatrolTarget = currentPatrolTarget == patrolPointA ? patrolPointB : patrolPointA;
         }
+    }
+
+    private Transform GetNearestPatrolPoint()
+    {
+        float distanceToA = Vector2.Distance(transform.position, patrolPointA.position);
+        float distanceToB = Vector2.Distance(transform.position, patrolPointB.position);
+
+        return distanceToA < distanceToB ? patrolPointA : patrolPointB;
     }
 
     protected bool PlayerDetected()
@@ -94,5 +119,26 @@ public abstract class EnemyAI : MonoBehaviour
 
         // Move toward the player
         transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (patrolPointA != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(patrolPointA.position, 0.2f);
+        }
+
+        if (patrolPointB != null)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(patrolPointB.position, 0.2f);
+        }
+
+        if (currentPatrolTarget != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, currentPatrolTarget.position);
+        }
     }
 }

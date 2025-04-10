@@ -148,7 +148,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -183,11 +183,11 @@ MonoBehaviour:
   patrolPointA: {fileID: 0}
   patrolPointB: {fileID: 0}
   attackRange: 1
-  attackPoint: {fileID: 0}
   attackRadius: 0.5
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
+  attackCooldown: 1.5
 --- !u!114 &477643189038413243
 MonoBehaviour:
   m_ObjectHideFlags: 0
