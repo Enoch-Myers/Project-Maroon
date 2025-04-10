@@ -162,7 +162,7 @@ public class StatsScreen : MonoBehaviour
         }
     }
 
-    private void ShowLevelResults()
+    public void ShowLevelResults()
     {
         // print("bestLevelResult: " + bestLevelResult + "\nnewLevelResult: " + newLevelResult);
 

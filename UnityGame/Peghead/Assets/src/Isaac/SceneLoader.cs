@@ -11,6 +11,8 @@ public class SceneLoader : MonoBehaviour
 
     public static SceneLoader Instance { get; private set; }
 
+    private bool isTransitioning = false;
+
     private void Awake()
     {
         if (Instance == null)
@@ -26,8 +28,11 @@ public class SceneLoader : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        isTransitioning = false;
+
         if (scene.name != "TitleScreen") {
-            cutoutMask.enabled = false; // Fixes a bug preventing the circle from rendering on a new scene loading
+            // Fixes a bug preventing the circle from rendering on a new scene loading
+            cutoutMask.enabled = false;
             cutoutMask.enabled = true;
             StartCoroutine(EndCircleWipeTransition());
         }
@@ -36,30 +41,35 @@ public class SceneLoader : MonoBehaviour
     IEnumerator EndCircleWipeTransition()
     {
         transition.SetTrigger("End");
-        
-        yield return new WaitForSeconds(transitionTime);
 
+        yield return new WaitForSeconds(transitionTime);
+        
+        // Optional: reset the trigger if needed
         // transition.ResetTrigger("End");
     }
 
     // Starts a circle wipe transition from one scene to the next
     public void LoadSceneAsync(string sceneName)
     {
+        if (isTransitioning) return;
+
+        isTransitioning = true;
         StartCoroutine(LoadScene(sceneName));
     }
 
-    IEnumerator LoadScene(string sceneName)
+    private IEnumerator LoadScene(string sceneName)
     {
         transition.SetTrigger("Start");
 
         yield return new WaitForSeconds(transitionTime);
 
+        // Optional: reset the trigger if needed
         // transition.ResetTrigger("Start");
 
         SceneManager.LoadScene(sceneName);
     }
 
-    // Update is called once per frame
+    // Update is unused but kept for future use
     void Update()
     {
         

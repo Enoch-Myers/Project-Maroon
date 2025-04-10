@@ -21,7 +21,7 @@ public class Finish_Line : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            SceneLoader.Instance.LoadSceneAsync(nextSceneName);
+            GameManager.instance.WinLevel();
         }
     }
 }
