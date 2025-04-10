@@ -136,13 +136,13 @@ public class StatsScreen : MonoBehaviour
         
         gameObject.SetActive(false);
 
-        // Testing
-        newLevelResult = new LevelResult {
-            time = 60f,
-            lives = 2,
-            levelName = "Tutorial"
-        };
-        ShowLevelResults();
+        // // Testing
+        // newLevelResult = new LevelResult {
+        //     time = 60f,
+        //     lives = 2,
+        //     levelName = "Tutorial"
+        // };
+        // ShowLevelResults();
     }
 
     void OnPlayerDied()
