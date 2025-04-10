@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     
-    private GameObject dieWinScreenPrefab, statsScreenPrefab, hudScreenPrefab;
+    private GameObject dieWinScreenPrefab, statsScreenPrefab, hudScreenPrefab, pauseScreenPrefab;
 
     private void Awake()
     {
@@ -21,8 +21,7 @@ public class GameManager : MonoBehaviour
         dieWinScreenPrefab = Resources.Load<GameObject>("Prefabs/DieWinScreen");
         hudScreenPrefab = Resources.Load<GameObject>("Prefabs/HUD");
         statsScreenPrefab = Resources.Load<GameObject>("Prefabs/StatsScreen");
-
-        print(dieWinScreenPrefab);
+        pauseScreenPrefab = Resources.Load<GameObject>("Prefabs/PauseScreen");
 
         // Subscribe to scene load event
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -52,6 +51,7 @@ public class GameManager : MonoBehaviour
             Instantiate(dieWinScreenPrefab);
             Instantiate(hudScreenPrefab);
             Instantiate(statsScreenPrefab);
+            Instantiate(pauseScreenPrefab);
         }
     }
 }
