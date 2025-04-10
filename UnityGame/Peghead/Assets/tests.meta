@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:UnityGame/Peghead/Assets/tests.meta
 guid: 2257df0f094cc2f4188d911c7dbcc550
+========
+guid: 755161a56731d734ba14d82937656d1c
+>>>>>>>> Stashed changes:UnityGame/Peghead/Assets/Resources.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
