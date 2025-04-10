@@ -4,32 +4,58 @@ using UnityEngine;
 public class MeleeEnemy : EnemyAI
 {
     public float attackRange = 1f;
-    public Transform attackPoint;
     public float attackRadius = 0.5f;
     public LayerMask playerLayer;
+    public float attackCooldown = 1.5f; // Cooldown between attacks
+    private bool canAttack = true; // Tracks if the enemy can attack
 
-    protected override void Attack()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Vector2.Distance(transform.position, player.position) <= attackRange)
+        if (collision.CompareTag("Player") && canAttack)
         {
-            StartCoroutine(PerformAttack());
+            AttackPlayer(collision);
         }
     }
 
-    private IEnumerator PerformAttack()
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (isAttacking) yield break;
-        isAttacking = true;
-
-        yield return new WaitForSeconds(0.5f); // Attack delay
-
-        Collider2D hitPlayer = Physics2D.OverlapBox(attackPoint.position, new Vector2(attackRadius, attackRadius), 0, playerLayer);
-        if (hitPlayer != null)
+        if (collision.CompareTag("Player") && canAttack)
         {
-            Debug.Log("Player hit!");
+            AttackPlayer(collision);
         }
+    }
 
+    private void AttackPlayer(Collider2D playerCollider)
+    {
+        // Deal damage to the player
+        Debug.Log("Player hit by melee attack!");
+        playerCollider.GetComponent<PlayerHealth>()?.TakeDamage(1);
+
+        // Start cooldown
+        StartCoroutine(AttackCooldown());
+    }
+
+    private IEnumerator AttackCooldown()
+    {
+        canAttack = false;
         yield return new WaitForSeconds(attackCooldown);
-        isAttacking = false;
+        canAttack = true;
+    }
+
+    protected override void Attack()
+    {
+        // Implement the Attack logic for the melee enemy
+        Collider2D hitPlayer = Physics2D.OverlapCircle(transform.position, attackRange, playerLayer);
+        if (hitPlayer != null && hitPlayer.CompareTag("Player") && canAttack)
+        {
+            AttackPlayer(hitPlayer);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        // Visualize the attack range in the Scene view
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }

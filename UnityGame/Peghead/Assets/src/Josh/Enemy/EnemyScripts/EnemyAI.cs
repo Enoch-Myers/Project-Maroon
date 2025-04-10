@@ -63,6 +63,8 @@ public abstract class EnemyAI : MonoBehaviour
     protected bool PlayerDetected()
     {
         if (player == null) return false;
+
+        // Check if the player is within detection range
         return Vector2.Distance(transform.position, player.position) <= detectionRange;
     }
 
@@ -88,7 +90,9 @@ public abstract class EnemyAI : MonoBehaviour
 
     protected virtual void ChasePlayer()
     {
-        // Default behavior for chasing the player (can be empty or provide basic logic)
-        Debug.Log("Enemy is chasing the player!");
+        if (player == null) return;
+
+        // Move toward the player
+        transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
     }
 }

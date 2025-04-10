@@ -15,13 +15,13 @@ public class PlayerHealth : MonoBehaviour
         NotifyUI();
     }
 
-    public void TakeDamage()
+    public void TakeDamage(int damage)
     {
         if (currentLives <= 0) return;
 
-        currentLives--;
+        currentLives -= damage;
 
-        print("take damage new lives: " + currentLives);
+        Debug.Log($"Player took {damage} damage! Current lives: {currentLives}");
 
         NotifyUI();
 

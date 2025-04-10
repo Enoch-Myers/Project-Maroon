@@ -47,7 +47,7 @@ public class FlyingEnemy : EnemyAI
     {
         if (player == null) return;
 
-        // Move towards the player while keeping a certain height difference
+        // Move toward the player while keeping a certain height difference
         Vector2 targetPosition = new Vector2(player.position.x, player.position.y + verticalChaseRange);
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, chaseSpeed * Time.deltaTime);
     }

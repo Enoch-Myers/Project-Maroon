@@ -15,14 +15,13 @@ public class Projectile : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            // Assuming the player has a script with a TakeDamage method
-            //collision.GetComponent<PlayerHealth>()?.TakeDamage(damage);
+            Debug.Log("Projectile hit the player!");
+            collision.GetComponent<PlayerHealth>()?.TakeDamage(damage); // Pass the damage value
             Destroy(gameObject); // Destroy the projectile on impact
         }
         else if (collision.CompareTag("Obstacle"))
         {
-            // Destroy the projectile if it hits an obstacle / platform;
-            Destroy(gameObject);
+            Destroy(gameObject); // Destroy the projectile if it hits an obstacle
         }
     }
 }
