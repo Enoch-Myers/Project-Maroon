@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelSelectManager : MonoBehaviour
 {
     public LevelNode currentNode;
+    public Text levelTitleText;
+
 
     void Update()
     {
@@ -23,5 +26,8 @@ public class LevelSelectManager : MonoBehaviour
         currentNode.DeselectNode();
         currentNode = newNode;
         currentNode.SelectNode();
+
+        if (levelTitleText != null)
+        levelTitleText.text = currentNode.levelDisplayName;
     }
 }

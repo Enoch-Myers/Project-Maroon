@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 31f642335f3885549a8d73906e26c8b9
+guid: e3efde1401784b64881ff323fbcee2f1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3477412378028014433
-    second: mapblankextendedsize_0
+      213: -563501658026273455
+    second: galleon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mapblankextendedsize_0
+      name: galleon_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1495
-        height: 710
+        x: 10
+        y: 8
+        width: 162
+        height: 227
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f940816cddfbdbfc0800000000000000
-      internalID: -3477412378028014433
+      spriteID: 15510034a3a0e28f0800000000000000
+      internalID: -563501658026273455
       vertices: []
       indices: 
       edges: []

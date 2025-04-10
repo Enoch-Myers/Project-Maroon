@@ -8,6 +8,7 @@ public class LevelNode : MonoBehaviour
     public string levelID;
     public bool isSelected = false;
     public bool isLocked = true;
+    public string levelDisplayName = "Level Name";
     
     private SpriteRenderer spriteRenderer;
     private Color defaultColor = Color.blue;
@@ -18,29 +19,29 @@ public class LevelNode : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         //defaultColor = spriteRenderer.color;
-        spriteRenderer.color = lockedColor;
+        /*spriteRenderer.color = lockedColor;
         if (!isLocked) {
             spriteRenderer.color = defaultColor;
         }
         if (isSelected) {
             spriteRenderer.color = selectedColor;
-        }
+        }*/
     }
 
     public void SelectNode()
     {
         isSelected = true;
-        spriteRenderer.color = selectedColor;
+        //spriteRenderer.color = selectedColor;
     }
 
     public void DeselectNode()
     {
         isSelected = false;
-        if (isLocked){
+        /*if (isLocked){
             spriteRenderer.color = lockedColor;
         }else{
             spriteRenderer.color = defaultColor;
-        }
+        }*/
     }
 
     public void ActivateNode()
