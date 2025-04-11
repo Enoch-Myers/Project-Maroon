@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public int damage = 1; // Damage dealt by the projectile
     public float lifetime = 5f; // Time before the projectile is destroyed
 
     private void Start()
@@ -16,10 +15,10 @@ public class Projectile : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Debug.Log("Projectile hit the player!");
-            collision.GetComponent<PlayerHealth>()?.TakeDamage(damage); // Pass the damage value
+            collision.GetComponent<PlayerHealth>()?.TakeDamage(); // Pass the damage value
             Destroy(gameObject); // Destroy the projectile on impact
         }
-        else if (collision.CompareTag("Obstacle"))
+        else if (collision.CompareTag("Ground"))
         {
             Destroy(gameObject); // Destroy the projectile if it hits an obstacle
         }

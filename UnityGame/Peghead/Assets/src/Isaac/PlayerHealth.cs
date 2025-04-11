@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -15,13 +16,13 @@ public class PlayerHealth : MonoBehaviour
         NotifyUI();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage()
     {
         if (currentLives <= 0) return;
 
-        currentLives -= damage;
+        currentLives--;
 
-        Debug.Log($"Player took {damage} damage! Current lives: {currentLives}");
+        Debug.Log($"Player took damage! Current lives: {currentLives}");
 
         NotifyUI();
 

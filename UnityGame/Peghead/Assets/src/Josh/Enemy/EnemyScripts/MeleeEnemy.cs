@@ -29,7 +29,7 @@ public class MeleeEnemy : EnemyAI
     {
         // Deal damage to the player
         Debug.Log("Player hit by melee attack!");
-        playerCollider.GetComponent<PlayerHealth>()?.TakeDamage(1);
+        playerCollider.GetComponent<PlayerHealth>()?.TakeDamage();
 
         // Start cooldown
         StartCoroutine(AttackCooldown());

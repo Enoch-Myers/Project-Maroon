@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 178596206732283113}
   - component: {fileID: 3336005069002737661}
   - component: {fileID: 2657432751318514864}
-  - component: {fileID: 8935106573304964496}
   - component: {fileID: 477643189038413243}
   m_Layer: 0
   m_Name: FlyingEnemy
@@ -164,30 +163,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8935106573304964496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8434969788822645321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c36ad0ed02744545a5f5ec0e0c13c9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 2
-  detectionRange: 4
-  health: 3
-  attackCooldown: 1.5
-  patrolPointA: {fileID: 0}
-  patrolPointB: {fileID: 0}
-  attackRange: 1
-  attackRadius: 0.5
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 1
-  attackCooldown: 1.5
 --- !u!114 &477643189038413243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,11 +178,15 @@ MonoBehaviour:
   moveSpeed: 2
   detectionRange: 4
   health: 3
-  attackCooldown: 1.5
+  attackCooldown: 50
   patrolPointA: {fileID: 0}
   patrolPointB: {fileID: 0}
   pointA: {fileID: 0}
   pointB: {fileID: 0}
   verticalChaseRange: 3
-  patrolSpeed: 2
-  chaseSpeed: 3
+  patrolSpeed: 1
+  chaseSpeed: 1
+  swoopSpeed: 2
+  swoopHeight: 2
+  attackRange: 1
+  attackCooldown: 1.5
