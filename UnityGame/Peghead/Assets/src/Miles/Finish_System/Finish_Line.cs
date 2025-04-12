@@ -5,23 +5,11 @@ public class Finish_Line : MonoBehaviour
 {
     public string nextSceneName;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GameManager.instance.WinLevel();
+            GameManager.instance.WinLevel(); // on player collision player wins level and gets pushed to entered scene
         }
     }
 }

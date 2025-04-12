@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class player_movement : MonoBehaviour
 {
+    public Coin_despawner CM;//--Miles
+
     public float speed;
     public float dashSpeed;
     public float dashTime;
@@ -94,4 +96,14 @@ public class player_movement : MonoBehaviour
             isJumping = true;
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other)// Put here by miles for coin pickup
+    {
+        if (other.gameObject.CompareTag("Coins"))
+        {
+            Destroy(other.gameObject);
+            CM.coinCount++;
+        }
+    }
 }
+

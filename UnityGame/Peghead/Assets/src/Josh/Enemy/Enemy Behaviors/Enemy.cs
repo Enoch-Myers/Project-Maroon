@@ -6,7 +6,7 @@ public class EnemyAI : MonoBehaviour
     public float patrolSpeed = 2f;
     public float chaseSpeed = 3f;
     public float patrolRange = 5f;
-    public float detectionRange = 4f;
+    public float detectionRange = 10f;// Modified by Miles to work better with spawn script
     public float attackRange = 1f;
     public int health = 3;
     public float attackCooldown = 1.5f;
@@ -122,6 +122,15 @@ public class EnemyAI : MonoBehaviour
         rb.isKinematic = true;
         coll.enabled = false;
         Destroy(gameObject, 1f); // Delayed destruction
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)// added by miles
+    {
+        if (collision.CompareTag("Projectile"))
+        {
+            TakeDamage(1); // Apply damage (tweak value as needed)
+            Destroy(collision.gameObject); // Destroy the projectile
+        }
     }
 
     private void OnDrawGizmosSelected()

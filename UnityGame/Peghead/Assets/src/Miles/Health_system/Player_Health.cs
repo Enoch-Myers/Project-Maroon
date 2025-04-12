@@ -4,7 +4,7 @@ public class Player_Health : MonoBehaviour
 {
     public int maxHealth = 3;
     public int currentHealth;
-
+    // basic player health script mainly used for testing while waiting for rest of player to be made
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
