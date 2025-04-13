@@ -11,22 +11,37 @@ public class LevelTimes
     public string[] times;
 }
 
-struct LevelResult
+class LevelResult
 {
-    public float time;
-    public int lives;
+    public float time = float.PositiveInfinity;
+    public int lives = 0;
     public string levelName;
 
     public LevelResult(string levelName)
     {
-        this.time = float.PositiveInfinity;
-        this.lives = 0;
         this.levelName = levelName;
     }
 
-    public readonly override string ToString()
+    public virtual string GetSummary()
     {
         return $"LevelResult(levelName: {levelName}, time: {time}, lives: {lives})";
+    }
+
+    public override string ToString()
+    {
+        return GetSummary();
+    }
+}
+
+class LevelResultWithKills : LevelResult
+{
+    public float kills = 0;
+
+    public LevelResultWithKills(string levelName) : base(levelName) {}
+
+    public override string GetSummary()
+    {
+        return $"LevelResult(levelName: {levelName}, time: {time}, lives: {lives}), kills: {kills}";
     }
 }
 
@@ -239,34 +254,29 @@ public class StatsScreen : MonoBehaviour
 
         float gradeAlpha = gradeIndicatorAlphas.Sum() / gradeIndicatorAlphas.Count();
         // print("[GetGrade()] gradeAlpha: " + gradeAlpha);
-
         string grade;
-        if (gradeAlpha >= 0.95f)
+        if (gradeAlpha >= 0.98f)
             grade = "S+";
-        else if (gradeAlpha >= 0.90f)
+        else if (gradeAlpha >= 0.95f)
             grade = "S";
-        else if (gradeAlpha >= 0.85f)
+        else if (gradeAlpha >= 0.90f)
             grade = "A+";
-        else if (gradeAlpha >= 0.80f)
+        else if (gradeAlpha >= 0.85f)
             grade = "A";
-        else if (gradeAlpha >= 0.75f)
+        else if (gradeAlpha >= 0.80f)
             grade = "A-";
-        else if (gradeAlpha >= 0.70f)
+        else if (gradeAlpha >= 0.75f)
             grade = "B+";
-        else if (gradeAlpha >= 0.65f)
+        else if (gradeAlpha >= 0.70f)
             grade = "B";
-        else if (gradeAlpha >= 0.60f)
+        else if (gradeAlpha >= 0.65f)
             grade = "B-";
-        else if (gradeAlpha >= 0.55f)
+        else if (gradeAlpha >= 0.60f)
             grade = "C+";
-        else if (gradeAlpha >= 0.50f)
+        else if (gradeAlpha >= 0.55f)
             grade = "C";
-        else if (gradeAlpha >= 0.45f)
+        else if (gradeAlpha >= 0.50f)
             grade = "C-";
-        else if (gradeAlpha >= 0.40f)
-            grade = "D+";
-        else if (gradeAlpha >= 0.35f)
-            grade = "D";
         else
             grade = "F";
         // print("[GetGrade()] grade: " + grade);
