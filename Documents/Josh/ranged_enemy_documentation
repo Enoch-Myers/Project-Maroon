@@ -1,7 +1,8 @@
+```markdown
 # **Ranged Enemy Documentation**
 
 ## **General Description**
-The **Ranged Enemy** is an enemy type that attacks the player by firing projectiles. It detects the player within a specified range and periodically shoots projectiles in their direction. The system is modular, allowing you to attach any projectile prefab with its own behavior script for flexible customization.
+The **Ranged Enemy** is an enemy type that attacks the player by firing projectiles. It detects the player within a specified range and periodically shoots projectiles in their direction. The system is designed to be modular and adaptable.
 
 ---
 
@@ -33,18 +34,18 @@ The **Ranged Enemy** is an enemy type that attacks the player by firing projecti
 ---
 
 ## **Setup Instructions**
-1. **Create the Ranged Enemy**:
+### 1. **Create the Ranged Enemy**
    - Add a sprite to the scene and attach `Rigidbody2D`, `BoxCollider2D`, and the `RangedEnemy` script.
    - Configure the `Rigidbody2D` as `Kinematic`.
 
-2. **Assign the Projectile Prefab**:
+### 2. **Assign the Projectile Prefab**
    - Create a projectile prefab with:
      - `Rigidbody2D` (set to `Kinematic`).
      - `CircleCollider2D`.
      - A separate **Projectile Script** for modular behavior (e.g., damage, lifetime).
    - Drag the prefab into the `projectilePrefab` field of the `RangedEnemy` script.
 
-3. **Configure the RangedEnemy Script**:
+### 3. **Configure the RangedEnemy Script**
    - Set `projectileSpeed`, `attackCooldown`, and `playerDetectionRange` in the Inspector.
    - Assign the `playerLayer` to detect the player.
 
@@ -52,11 +53,8 @@ The **Ranged Enemy** is an enemy type that attacks the player by firing projecti
 
 ## **Modularity**
 The **Ranged Enemy** is designed to be modular:
-- You can attach any projectile prefab with its own **Projectile Script** to define unique behaviors (e.g., homing, explosive, piercing).
+- Attach any projectile prefab with its own **Projectile Script** to define unique behaviors (e.g., homing, explosive, piercing).
 - The `RangedEnemy` script only handles instantiation and firing, leaving projectile behavior entirely up to the attached script.
 
-
-
 This modular approach allows you to reuse the **RangedEnemy** script with different projectile types, making it highly flexible and adaptable.
-
----
+```
