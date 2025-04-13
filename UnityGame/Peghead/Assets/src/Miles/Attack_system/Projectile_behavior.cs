@@ -3,10 +3,12 @@ using UnityEngine;
 public class Projectile_behavior : MonoBehaviour
 {
     public float speed = 10f;
-    // Update is called once per frame
+
+    public Vector2 direction = Vector2.right;
+
     private void Update()
     {
-        transform.position += transform.right * Time.deltaTime * speed;
+        transform.Translate(direction.normalized * speed * Time.deltaTime);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
