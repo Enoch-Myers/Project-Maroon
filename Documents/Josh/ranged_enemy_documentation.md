@@ -11,7 +11,6 @@ The **Ranged Enemy** is an enemy type that attacks the player by firing projecti
 3. **Rigidbody2D**: Handles physics interactions.
 4. **BoxCollider2D**: Detects collisions.
 5. **RangedEnemy (Script)**: Controls the enemy's behavior.
-6. **Animator (Optional)**: Handles animations (e.g., idle, attack).
 
 ---
 
