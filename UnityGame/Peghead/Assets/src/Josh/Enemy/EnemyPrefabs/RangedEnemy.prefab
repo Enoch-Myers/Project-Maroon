@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 178596206732283113}
   - component: {fileID: 3336005069002737661}
   - component: {fileID: 2657432751318514864}
-  - component: {fileID: -7645722199298048588}
+  - component: {fileID: -3682936061085561250}
   m_Layer: 0
-  m_Name: Enemy
-  m_TagString: Untagged
+  m_Name: RangedEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,7 +105,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -163,7 +163,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-7645722199298048588
+--- !u!114 &-3682936061085561250
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,18 +172,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8434969788822645321}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64c5276b961846045917b1c49e7532b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 20a99f42f6e50744fbc5832311003e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolSpeed: 2
-  chaseSpeed: 3
-  patrolRange: 5
+  moveSpeed: 2
   detectionRange: 4
-  attackRange: 1
   health: 3
   attackCooldown: 1.5
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  attackPoint: {fileID: 0}
-  attackRadius: 0.5
+  patrolPointA: {fileID: 0}
+  patrolPointB: {fileID: 0}
+  projectilePrefab: {fileID: 1348874027608017959, guid: 38552b147c262914888ad5d3b34cad4b, type: 3}
+  projectileSpeed: 5
