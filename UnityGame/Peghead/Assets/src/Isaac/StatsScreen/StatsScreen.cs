@@ -13,7 +13,7 @@ public class LevelTimes
 
 class LevelResult
 {
-    public float time = float.PositiveInfinity;
+    public float time = 0;
     public int lives = 0;
     public string levelName;
 
@@ -68,7 +68,6 @@ public class StatsScreen : MonoBehaviour
             levelName = levelName
         };
 
-        PlayerHealth.OnPlayerDied += OnPlayerDied;
         PlayerHealth.OnLivesChanged += OnPlayerLivesChanged;
     }
 
@@ -144,7 +143,10 @@ public class StatsScreen : MonoBehaviour
         });
         */
         
-        gameObject.SetActive(false);
+        CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 0f;              // Fully transparent
+        canvasGroup.interactable = false;    // Prevents UI clicks
+        canvasGroup.blocksRaycasts = false;  // Disables mouse blocking
 
         // // Testing
         // newLevelResult = new LevelResult {
@@ -153,11 +155,6 @@ public class StatsScreen : MonoBehaviour
         //     levelName = "Tutorial"
         // };
         // ShowLevelResults();
-    }
-
-    void OnPlayerDied()
-    {
-        ShowLevelResults();
     }
 
     void OnPlayerLivesChanged(int lives)
@@ -174,7 +171,7 @@ public class StatsScreen : MonoBehaviour
 
     public void ShowLevelResults()
     {
-        // print("bestLevelResult: " + bestLevelResult + "\nnewLevelResult: " + newLevelResult);
+        print("bestLevelResult: " + bestLevelResult + "\nnewLevelResult: " + newLevelResult);
 
         // Compare new results with best results
         var bestGradeResult = GetGrade(bestLevelResult);
@@ -217,7 +214,10 @@ public class StatsScreen : MonoBehaviour
         gradeText.rightText = newGradeResult.grade;
         highScoreImage.SetActive(gradeBetter);
 
-        gameObject.SetActive(true);
+        CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 1f;              // Fully transparent
+        canvasGroup.interactable = true;    // Prevents UI clicks
+        canvasGroup.blocksRaycasts = true;  // Disables mouse blocking
     }
 
     private (string grade, float alpha) GetGrade(LevelResult levelResult)

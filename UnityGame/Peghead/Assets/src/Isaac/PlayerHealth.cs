@@ -20,9 +20,7 @@ public class PlayerHealth : MonoBehaviour
         if (currentLives <= 0) return;
 
         currentLives--;
-
-        print("take damage new lives: " + currentLives);
-
+        
         NotifyUI();
 
         if (currentLives <= 0)

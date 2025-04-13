@@ -3,13 +3,14 @@ using UnityEngine;
 public class EnemyMeleeAttack : MonoBehaviour
 {
     public GameObject player;
-    private float attackCooldown = 10f;
+    private float attackCooldown = 1f;
     private float timer = 0f;
     private bool canAttack = true;
-    
+    private PlayerHealth playerHealth;
+
     void Start()
     {
-
+        playerHealth = FindFirstObjectByType<PlayerHealth>();
     }
 
     void Update()
@@ -35,8 +36,8 @@ public class EnemyMeleeAttack : MonoBehaviour
 
     void DoMeleeAttack()
     {
-        //player.health -= 10;
-        Debug.Log("Player is hit");
+        // Debug.Log("Player is hit");
+        playerHealth.TakeDamage();
         canAttack = false;
         timer = 0f;
     }

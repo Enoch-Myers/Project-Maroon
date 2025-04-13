@@ -17,15 +17,22 @@ public class player_movement : MonoBehaviour
     public float Jump;
     public bool isJumping;
     public Rigidbody2D rb;
+    private PlayerHealth playerHealth;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerHealth = FindFirstObjectByType<PlayerHealth>();
     }
 
     public void Update()
     {
+        if (playerHealth.GetCurrentLives() < 1) {
+            return;
+        }
+        
         Move = Input.GetAxis("Horizontal");
+        
 
         if (Move != 0)
         {

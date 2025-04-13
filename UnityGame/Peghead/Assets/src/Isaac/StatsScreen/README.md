@@ -10,16 +10,15 @@ In `StatsScreen.Awake()`
 
 1. Queries the best result from saved data for the current level into `bestLevelResult`.
 2. Initializes `newLevelResult` with default values for the upcoming result of the current level.
-3. Subscribes to the `PlayerHealth.OnPlayerDied` event to automatically show the level results when the player dies.
-4. Subscribes to the `PlayerHealth.OnLivesChanged` event to automatically update the `newLevelResult.lives` statistic whenever the player loses a life.
+3. Subscribes to the `PlayerHealth.OnLivesChanged` event to automatically update the `newLevelResult.lives` statistic whenever the player loses a life.
 
 In `StatsScreen.Start()`
 
-5. Hides the `StatsScreen` ui because it should not be visible until the player dies or until the player reaches the end of a level.
+4. Hides the `StatsScreen` ui because it should not be visible until the player reaches the end of a level.
 
 In `StatsScreen.Update()`
 
-6. Begins accumulating the time it takes for the player to finish the level, which is stored in `newLevelResult.time`.
+5. Begins accumulating the time it takes for the player to finish the level, which is stored in `newLevelResult.time`.
 
 ## Editor Configuration:
 
@@ -40,4 +39,4 @@ This method does the following:
 2. Calculates a grade (from `F (<50%) to (98%<=) S+`) based on the `newLevelResult` stats.
 3. Displays the `newLevelResult.time`, `newLevelResult.lives`, and calculated grade on the stats screen with the `NEW HIGH SCORE` banner if the calculated grade is better than the old best grade.
 
-This method currently gets called by the `Finish_Line` class when the player reaches the end of a level.
+This method currently gets called by the `GameManager` class when the player finishes a level.
