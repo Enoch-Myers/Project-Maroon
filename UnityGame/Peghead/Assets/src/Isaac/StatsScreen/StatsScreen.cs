@@ -17,11 +17,6 @@ class LevelResult
     public int lives = 0;
     public string levelName;
 
-    public LevelResult(string levelName)
-    {
-        this.levelName = levelName;
-    }
-
     public virtual string GetSummary()
     {
         return $"LevelResult(levelName: {levelName}, time: {time}, lives: {lives})";
@@ -36,8 +31,6 @@ class LevelResult
 class LevelResultWithKills : LevelResult
 {
     public float kills = 0;
-
-    public LevelResultWithKills(string levelName) : base(levelName) {}
 
     public override string GetSummary()
     {
@@ -71,7 +64,9 @@ public class StatsScreen : MonoBehaviour
             levelName = levelName
         };
 
-        newLevelResult = new LevelResult(levelName);
+        newLevelResult = new LevelResult {
+            levelName = levelName
+        };
 
         PlayerHealth.OnPlayerDied += OnPlayerDied;
         PlayerHealth.OnLivesChanged += OnPlayerLivesChanged;
