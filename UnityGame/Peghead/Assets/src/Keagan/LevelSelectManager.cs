@@ -3,9 +3,20 @@ using UnityEngine.UI;
 
 public class LevelSelectManager : MonoBehaviour
 {
+    public static LevelSelectManager Instance {get; private set;}
+
     public LevelNode currentNode;
     public Text levelTitleText;
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject); // prevent duplicates
+            return;
+        }
+        Instance = this;
+    }
 
     void Update()
     {
@@ -19,15 +30,13 @@ public class LevelSelectManager : MonoBehaviour
 
     public void MoveToNode(LevelNode newNode)
     {
-        if (newNode == null) {
-            return;
-        }
-        
+        if (newNode == null) return;
+
         currentNode.DeselectNode();
         currentNode = newNode;
         currentNode.SelectNode();
 
         if (levelTitleText != null)
-        levelTitleText.text = currentNode.levelDisplayName;
+            levelTitleText.text = currentNode.levelDisplayName;
     }
 }
