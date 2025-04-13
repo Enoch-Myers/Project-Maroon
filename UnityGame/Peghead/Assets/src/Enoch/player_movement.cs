@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class player_movement : MonoBehaviour
 {
-    public Coin_despawner CM;//--Miles
-
     public float speed;
     public float dashSpeed;
     public float dashTime;
@@ -17,22 +15,16 @@ public class player_movement : MonoBehaviour
     public float Jump;
     public bool isJumping;
     public Rigidbody2D rb;
-    private PlayerHealth playerHealth;
+    public bool isTouchingWall;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        playerHealth = FindFirstObjectByType<PlayerHealth>();
     }
 
     public void Update()
     {
-        if (playerHealth.GetCurrentLives() < 1) {
-            return;
-        }
-        
         Move = Input.GetAxis("Horizontal");
-        
 
         if (Move != 0)
         {
@@ -103,14 +95,4 @@ public class player_movement : MonoBehaviour
             isJumping = true;
         }
     }
-
-    void OnTriggerEnter2D(Collider2D other)// Put here by miles for coin pickup
-    {
-        if (other.gameObject.CompareTag("Coins"))
-        {
-            Destroy(other.gameObject);
-            CM.coinCount++;
-        }
-    }
 }
-
