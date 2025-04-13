@@ -1,4 +1,3 @@
-```markdown
 # **Ranged Enemy Documentation**
 
 ## **General Description**
@@ -57,4 +56,3 @@ The **Ranged Enemy** is designed to be modular:
 - The `RangedEnemy` script only handles instantiation and firing, leaving projectile behavior entirely up to the attached script.
 
 This modular approach allows you to reuse the **RangedEnemy** script with different projectile types, making it highly flexible and adaptable.
-```
