@@ -43,18 +43,23 @@ public class LevelNode : MonoBehaviour
             spriteRenderer.color = defaultColor;
         }*/
     }
-
+    
     public void ActivateNode()
-    {
-        if (!isLocked){
-            Debug.Log("Starting Level: " + levelID);
-            // StartCoroutine(TransitionLevel()); //weird unity interface functions require this being a new function
-            SceneLoader.Instance.LoadSceneAsync(levelID);
-        }else{
-            Debug.Log("Attempted to start locked level: " + levelID);
+        {
+            if (!isLocked){
+                Debug.Log("Starting Level: " + levelID);
+
+                if (SceneLoader.Instance != null) {
+                    SceneLoader.Instance.LoadSceneAsync(levelID);
+                } else {
+                    Debug.LogWarning("SceneLoader not found – skipping scene load (likely running a test).");
+                }
+
+            } else {
+                Debug.Log("Attempted to start locked level: " + levelID);
+            }
         }
-        
-    }
+
 
     private IEnumerator TransitionLevel() //this is where levels are loaded
     {
