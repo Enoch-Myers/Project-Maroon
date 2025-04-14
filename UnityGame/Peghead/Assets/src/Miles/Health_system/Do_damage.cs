@@ -2,20 +2,9 @@ using UnityEngine;
 
 public class Do_damage : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
-    {
+    {//checks if object colides into player if so does damage to player, used for testing while waiting for enemy attacks
         Debug.Log("collided");
         if(collision.gameObject.CompareTag("Player"))
         {

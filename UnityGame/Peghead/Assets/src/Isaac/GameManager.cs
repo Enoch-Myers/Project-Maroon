@@ -65,23 +65,27 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator OnPlayerDiedHandler()
     {
-        Time.timeScale = 0;
+        // Time.timeScale = 0;
 
-        DieWinScreen dieWinScreen = FindFirstObjectByType<DieWinScreen>();
+        DieWinScreen dieWinScreen = FindFirstObjectByType<DieWinScreen>(FindObjectsInactive.Include);
         dieWinScreen.ShowLose();
 
         yield return new WaitForSeconds(1.5f);
 
         dieWinScreen.gameObject.SetActive(false);
+        // StatsScreen statsScreen = FindFirstObjectByType<StatsScreen>();
+        // statsScreen.ShowLevelResults();
+
+        // yield return new WaitForSeconds(5f);
 
         SceneLoader.Instance.LoadSceneAsync("LevelSelect");
     }
 
     private IEnumerator WinLevelHandler()
     {
-        Time.timeScale = 0;
+        // Time.timeScale = 0;
 
-        DieWinScreen dieWinScreen = FindFirstObjectByType<DieWinScreen>();
+        DieWinScreen dieWinScreen = FindFirstObjectByType<DieWinScreen>(FindObjectsInactive.Include);
         dieWinScreen.ShowWin();
 
         yield return new WaitForSeconds(1.5f);

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// Static Stage 1 Boss
+// Stage 1 Boss
 public class BaseBoss1
 {
     public Transform player;

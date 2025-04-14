@@ -555,7 +555,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <color=#FFFFFFFF>HP BONUS</color><color=#FFDD00FF>4</color>
+  m_text: <color=#FFFFFFFF>HP BONUS</color><color=#FFFFFFFF>Right</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 85649340fd47207468e8e2e475aca8ba, type: 2}
   m_sharedMaterial: {fileID: 5048745275517184324, guid: 85649340fd47207468e8e2e475aca8ba, type: 2}
@@ -638,11 +638,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d7ff43080badf549b43c097e9013cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftText: HP BONUS
-  rightText: 4
-  fillChar: 46
+  _leftText: HP BONUS
+  _rightText: Right
+  _fillChar: 46
   leftTextColor: {r: 1, g: 1, b: 1, a: 1}
-  rightTextColor: {r: 1, g: 0.8666667, b: 0, a: 1}
+  rightTextColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &6339228360992741900
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,7 +787,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <color=#FFDD00FF>GRADE</color><color=#FFFFFFFF>A+</color>
+  m_text: <color=#FFD100FF>GRADE</color><color=#FFFFFFFF>Right</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 85649340fd47207468e8e2e475aca8ba, type: 2}
   m_sharedMaterial: {fileID: 5048745275517184324, guid: 85649340fd47207468e8e2e475aca8ba, type: 2}
@@ -865,15 +865,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6813280551867952360}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d7ff43080badf549b43c097e9013cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftText: GRADE
-  rightText: A+
-  fillChar: 46
-  leftTextColor: {r: 1, g: 0.8666667, b: 0, a: 1}
+  _leftText: GRADE
+  _rightText: Right
+  _fillChar: 46
+  leftTextColor: {r: 1, g: 0.8178636, b: 0, a: 1}
   rightTextColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &7560964361156901379
 GameObject:
@@ -1122,6 +1122,7 @@ GameObject:
   - component: {fileID: 7323284695984409802}
   - component: {fileID: 7001644310312813767}
   - component: {fileID: 4575875734551045087}
+  - component: {fileID: -2867314545398824666}
   m_Layer: 5
   m_Name: StatsScreen
   m_TagString: Untagged
@@ -1230,6 +1231,18 @@ MonoBehaviour:
     - 1:00
     - 2:00
     - 3:00
+--- !u!225 &-2867314545398824666
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8025997622350994943}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8121731090692032839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1296,7 +1309,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <color=#FFFFFFFF>TIME</color><color=#FFDD00FF>01:58</color>
+  m_text: <color=#FFFFFFFF>TIME</color><color=#FFFFFFFF>Right</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 85649340fd47207468e8e2e475aca8ba, type: 2}
   m_sharedMaterial: {fileID: 5048745275517184324, guid: 85649340fd47207468e8e2e475aca8ba, type: 2}
@@ -1379,8 +1392,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d7ff43080badf549b43c097e9013cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftText: TIME
-  rightText: 01:58
-  fillChar: 46
+  _leftText: TIME
+  _rightText: Right
+  _fillChar: 46
   leftTextColor: {r: 1, g: 1, b: 1, a: 1}
-  rightTextColor: {r: 1, g: 0.86508846, b: 0, a: 1}
+  rightTextColor: {r: 1, g: 1, b: 1, a: 1}

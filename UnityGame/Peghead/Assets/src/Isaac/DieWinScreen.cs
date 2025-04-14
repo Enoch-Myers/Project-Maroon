@@ -9,12 +9,6 @@ public class DieWinScreen : MonoBehaviour
     private void Start()
     {
         gameObject.SetActive(false); // Hide initially
-        PlayerHealth.OnPlayerDied += ShowLose;
-    }
-
-    private void OnDestroy()
-    {
-        PlayerHealth.OnPlayerDied -= ShowLose;
     }
 
     private void Show(string message, Color textColor)

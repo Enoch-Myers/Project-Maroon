@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/Tutorial.unity
     guid: 61fd2bbd863b84d4398fb2746d2d1431
   - enabled: 1
-    path: Assets/Scenes/Levels/BossLevel.unity
+    path: Assets/Scenes/Levels/BossTest.unity
     guid: 84c328e50f2d0d943a6e078bec0f1d11
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
