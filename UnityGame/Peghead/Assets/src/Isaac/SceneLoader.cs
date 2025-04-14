@@ -68,10 +68,4 @@ public class SceneLoader : MonoBehaviour
 
         SceneManager.LoadScene(sceneName);
     }
-
-    // Update is unused but kept for future use
-    void Update()
-    {
-        
-    }
 }

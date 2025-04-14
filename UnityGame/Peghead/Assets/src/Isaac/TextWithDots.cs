@@ -57,11 +57,13 @@ public class TextWithDots : MonoBehaviour
 
         tmp.ForceMeshUpdate();
 
+        // Get the size of the text
         float totalWidth = tmp.rectTransform.rect.width;
         float leftWidth = tmp.GetPreferredValues(_leftText).x;
         float rightWidth = tmp.GetPreferredValues(_rightText).x;
         float fillCharWidth = tmp.GetPreferredValues(_fillChar.ToString()).x;
 
+        // Calculate the number of periods to place
         int fillCharCount = Mathf.FloorToInt((totalWidth - leftWidth - rightWidth) / fillCharWidth);
         fillCharCount = Mathf.Max(0, fillCharCount);
 
@@ -70,6 +72,7 @@ public class TextWithDots : MonoBehaviour
         string leftColorHex = ColorUtility.ToHtmlStringRGBA(leftTextColor);
         string rightColorHex = ColorUtility.ToHtmlStringRGBA(rightTextColor);
 
+        // Set the text
         tmp.text = $"<color=#{leftColorHex}>{_leftText}</color>{dots}<color=#{rightColorHex}>{_rightText}</color>";
     }
 
