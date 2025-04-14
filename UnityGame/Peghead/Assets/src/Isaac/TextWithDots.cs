@@ -6,13 +6,31 @@ using TMPro;
 public class TextWithDots : MonoBehaviour
 {
     [Header("Text Settings")]
-    public string leftText = "Left";
-    public string rightText = "Right";
-    public char fillChar = '.';
+    [SerializeField] private string _leftText = "Left";
+    [SerializeField] private string _rightText = "Right";
+    [SerializeField] private char _fillChar = '.';
 
     [Header("Colors")]
     public Color leftTextColor = Color.white;
     public Color rightTextColor = Color.white;
+
+    public string leftText
+    {
+        get => _leftText;
+        set { _leftText = value; UpdateText(); }
+    }
+
+    public string rightText
+    {
+        get => _rightText;
+        set { _rightText = value; UpdateText(); }
+    }
+
+    public char fillChar
+    {
+        get => _fillChar;
+        set { _fillChar = value; UpdateText(); }
+    }
 
     private TextMeshProUGUI tmp;
     private Vector2 lastRectSize;
@@ -25,7 +43,6 @@ public class TextWithDots : MonoBehaviour
 
     void Update()
     {
-        // Detect changes in RectTransform size
         Vector2 currentRectSize = tmp.rectTransform.rect.size;
         if (currentRectSize != lastRectSize)
         {
@@ -36,25 +53,24 @@ public class TextWithDots : MonoBehaviour
 
     void UpdateText()
     {
+        if (!tmp) return;
+
         tmp.ForceMeshUpdate();
 
         float totalWidth = tmp.rectTransform.rect.width;
-
-        float leftWidth = tmp.GetPreferredValues(leftText).x;
-        float rightWidth = tmp.GetPreferredValues(rightText).x;
-        float fillCharWidth = tmp.GetPreferredValues(fillChar.ToString()).x;
+        float leftWidth = tmp.GetPreferredValues(_leftText).x;
+        float rightWidth = tmp.GetPreferredValues(_rightText).x;
+        float fillCharWidth = tmp.GetPreferredValues(_fillChar.ToString()).x;
 
         int fillCharCount = Mathf.FloorToInt((totalWidth - leftWidth - rightWidth) / fillCharWidth);
         fillCharCount = Mathf.Max(0, fillCharCount);
 
-        string dots = new string(fillChar, fillCharCount);
+        string dots = new string(_fillChar, fillCharCount);
 
-        // Serialize colors to HTML hex
         string leftColorHex = ColorUtility.ToHtmlStringRGBA(leftTextColor);
         string rightColorHex = ColorUtility.ToHtmlStringRGBA(rightTextColor);
 
-        // Final formatted text with colors
-        tmp.text = $"<color=#{leftColorHex}>{leftText}</color>{dots}<color=#{rightColorHex}>{rightText}</color>";
+        tmp.text = $"<color=#{leftColorHex}>{_leftText}</color>{dots}<color=#{rightColorHex}>{_rightText}</color>";
     }
 
 #if UNITY_EDITOR

@@ -20,13 +20,7 @@ public class MovementTest
     {
         yield return null; // Wait a frame for the scene to load
 
-        // GameObject managerObj = new GameObject();
-        // levelSelect = managerObj.AddComponent<LevelSelectManager>();
-
         levelSelect = GameObject.Find("LevelSelectManager").GetComponent<LevelSelectManager>();
-
-        // testNodeA = new GameObject().AddComponent<LevelNode>();
-        // testNodeB = new GameObject().AddComponent<LevelNode>();
 
         testNodeA = GameObject.Find("LevelNode0").GetComponent<LevelNode>();
         testNodeB = GameObject.Find("LevelNode1").GetComponent<LevelNode>();

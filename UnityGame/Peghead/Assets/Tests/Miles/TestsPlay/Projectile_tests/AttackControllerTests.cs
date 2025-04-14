@@ -35,7 +35,7 @@ public class AttackControllerTests
         var player = CreatePlayerWithAttackController(prefab);
 
         // Simulate click
-        Input.GetMouseButtonDown(0); // Doesn’t work in tests, so simulate manually:
+        Input.GetMouseButtonDown(0); // Doesnï¿½t work in tests, so simulate manually:
         Object.Instantiate(prefab, player.transform.position + Vector3.right, Quaternion.identity);
         yield return null;
 
