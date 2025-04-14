@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream:UnityGame/Peghead/Assets/src/Josh/Enemy/Enemy Behaviors/pointA.prefab.meta
 guid: cbf670fba5a4fd4489b62010a63924f0
 PrefabImporter:
+=======
+guid: 3813978d8d020724fb31ef41d189f9f6
+folderAsset: yes
+DefaultImporter:
+>>>>>>> Stashed changes:UnityGame/Peghead/Assets/Tests/Josh/EditMode.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

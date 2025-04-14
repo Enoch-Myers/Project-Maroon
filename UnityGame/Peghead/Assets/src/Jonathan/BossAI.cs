@@ -1,43 +1,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// This makes sure the boss always has a Rigidbody2D (needed for movement)
 [RequireComponent(typeof(Rigidbody2D))]
 public class BossAI : MonoBehaviour
 {
     [Header("Pathfinding")]
-    public AStarGrid pathGrid;          // Must have a side-scroller config (no diagonals)
-    public Transform player;            // Player transform
-    public float pathAgain = 1f;        // How often (seconds) to recalc path
+    public AStarGrid pathGrid;        // The grid used for A* pathfinding
+    public Transform player;          // The target the boss is chasing
+    public float pathAgain = 2f;      // How often the boss should recalculate its path
 
     [Header("Movement")]
     public float speed = 3f;
-    public float waypointThreshold = 0.2f;  // Threshold for waypoint proximity
-
-    [Header("Combat")]
-    public float attackRange = 1.5f;
+    public float waypointThreshold = 0.4f;  // How close it needs to be to a waypoint to move to the next
 
     [Header("Jumping")]
-    public float jumpForce = 5f;
-    public Transform groundCheck;       // A transform at the boss's feet for ground checking
+    public float jumpForce = 5f;          // How high the boss jumps
+    public Transform groundCheck;        // Empty object under boss to check if grounded
     public float groundCheckRadius = 0.1f;
-    public LayerMask groundLayer;       // Layer(s) that count as ground
-    public float jumpCooldown = 1.0f;     // Minimum time between jumps
+    public LayerMask groundLayer;        // What layers count as ground
+    public float jumpCooldown = 1.0f;    // Time between jumps
 
     [Header("Jump Trigger Thresholds")]
-    // Vertical difference required to trigger a jump while pursuing the player.
-    public float verticalPursuitThreshold = 0.3f;
-    // Horizontal difference near platform edge to trigger jump if a waypoint is above.
-    public float horizontalJumpThreshold = 0.2f; 
+    public float verticalPursuitThreshold = 0.1f; // If player or waypoint is this much higher, jump
+    public float horizontalJumpThreshold = 0.1f;  // Used to detect platform edges near waypoint
 
-    [Header("Overhead & Oscillation Settings")]
-    // When under the player, if within this horizontal distance, stop moving (to avoid oscillation).
-    public float stopOscillationThreshold = 0.2f;
-    // Radius for detecting obstacles overhead.
-    public float overheadDetectionRadius = 0.3f;
-    // Distance for clearance raycasts when trying to navigate around overhead platforms.
-    public float clearanceRayDistance = 1.0f;
-    // Vertical offset for clearance raycasts.
-    public float clearanceRayYOffset = 1.0f;
+    [Header("Overhead & Oscillation")]
+    public float stopOscillationThreshold = 0.2f;  // If directly under the player, don't shuffle back and forth
+    public float overheadDetectionRadius = 0.2f;   // Used to detect platforms overhead
+    public float clearanceRayDistance = 1.0f;      // How far to check for clearance left/right
+    public float clearanceRayYOffset = 1.0f;       // How high to offset those checks
 
     private Rigidbody2D rb;
     private List<Vector2> path = new List<Vector2>();
@@ -45,7 +37,7 @@ public class BossAI : MonoBehaviour
     private float lastRepathTime = 0f;
     private float lastJumpTime = -Mathf.Infinity;
     private Vector2 currentDirection = Vector2.zero;
-    private float lastHorizontalDir = 1f;  // Default horizontal direction (1 = right)
+    private float lastHorizontalDir = 1f;  // Remember last move direction
 
     void Awake()
     {
@@ -54,54 +46,37 @@ public class BossAI : MonoBehaviour
 
     void Update()
     {
-        // Recalculate the path periodically.
-        if (Time.time >= lastRepathTime + pathAgain)
-        {
+        // Every few seconds, recalculate the path to the player
+        if(Time.time >= lastRepathTime + pathAgain){
             RecalculatePath();
         }
 
-        // Update horizontal movement.
+        // Figure out which direction to move
         UpdateDirection();
 
-        // Attempt to jump if conditions allow.
-        if (ShouldJump())
-        {
-            Jump();
-        }
-
-        // Attack if within range.
-        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-        if (distanceToPlayer < attackRange)
-        {
-            Attack();
-        }
+        // If needed, jump
+        if(ShouldJump()) Jump();
     }
 
     void FixedUpdate()
     {
-        // Update horizontal velocity while preserving vertical velocity.
+        // Apply horizontal movement while keeping vertical velocity
         float vy = rb.linearVelocity.y;
         rb.linearVelocity = new Vector2(currentDirection.x * speed, vy);
     }
 
-    /// <summary>
-    /// Recalculates the path to the player using A*.
-    /// </summary>
     private void RecalculatePath()
     {
         lastRepathTime = Time.time;
         List<Vector2> newPath = pathGrid.FindPath(transform.position, player.position);
         Debug.Log("Boss Path found. Count = " + newPath.Count);
-        if (newPath != null && newPath.Count > 0)
-        {
-            // Find the closest waypoint.
+        if(newPath != null && newPath.Count > 0){
+            // Choose the closest point on the path as the starting point
             int closestIndex = 0;
             float closestDistance = Vector2.Distance(transform.position, newPath[0]);
-            for (int i = 1; i < newPath.Count; i++)
-            {
+            for(int i = 1; i < newPath.Count; i++){
                 float dist = Vector2.Distance(transform.position, newPath[i]);
-                if (dist < closestDistance)
-                {
+                if(dist < closestDistance){
                     closestDistance = dist;
                     closestIndex = i;
                 }
@@ -111,70 +86,53 @@ public class BossAI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Updates the horizontal movement direction.
-    /// </summary>
     private void UpdateDirection()
     {
-        // 1. If the boss is directly under the player and very close horizontally, stop moving.
-        if (player.position.y > transform.position.y)
-        {
+        // If under player and very close, stop to avoid glitchy back-and-forth movement
+        if(player.position.y > transform.position.y){
             float horizontalDistance = Mathf.Abs(player.position.x - transform.position.x);
-            if (horizontalDistance < stopOscillationThreshold)
-            {
+            if(horizontalDistance < stopOscillationThreshold){
                 currentDirection = Vector2.zero;
                 return;
             }
         }
 
-        // 2. If no path is available, use basic movement with overhead avoidance.
-        if (path == null || path.Count == 0)
-        {
-            if (IsObstructedAbove(overheadDetectionRadius) && player.position.y > transform.position.y)
-            {
-                // Determine which direction is clearer.
+        // If no path (blocked or failed), fallback to basic left/right move toward player
+        if(path == null || path.Count == 0){
+            if(IsObstructedAbove(overheadDetectionRadius) && player.position.y > transform.position.y){
+                // Try to go around platform overhead
                 int clearanceDir = GetClearanceDirection();
                 currentDirection = new Vector2(clearanceDir, 0);
-            }
-            else
-            {
+            }else{
                 float dx = player.position.x - transform.position.x;
-                if (Mathf.Abs(dx) < 0.1f)
-                    dx = lastHorizontalDir;
-                else
-                    lastHorizontalDir = Mathf.Sign(dx);
+                if(Mathf.Abs(dx) < 0.1f) dx = lastHorizontalDir;
+                else lastHorizontalDir = Mathf.Sign(dx);
                 currentDirection = new Vector2(Mathf.Sign(dx), 0);
             }
             return;
         }
 
-        // 3. If the current waypoint is out of range, default to moving toward the player.
-        if (currentWaypointIndex >= path.Count)
-        {
+        // If we're at the end of the path, just go toward player
+        if(currentWaypointIndex >= path.Count){
             float dx = player.position.x - transform.position.x;
-            if (Mathf.Abs(dx) < 0.1f)
-                dx = lastHorizontalDir;
-            else
-                lastHorizontalDir = Mathf.Sign(dx);
+            if(Mathf.Abs(dx) < 0.1f) dx = lastHorizontalDir;
+            else lastHorizontalDir = Mathf.Sign(dx);
             currentDirection = new Vector2(Mathf.Sign(dx), 0);
             return;
         }
 
-        // 4. Get the current waypoint.
+        // Get direction to current waypoint
         Vector2 targetWaypoint = path[currentWaypointIndex];
         Vector2 toWaypoint = targetWaypoint - (Vector2)transform.position;
 
-        // If close to the waypoint, move to the next one.
-        if (toWaypoint.magnitude < waypointThreshold)
-        {
+        // If close to the current waypoint, move to the next one
+        if(toWaypoint.magnitude < waypointThreshold){
             currentWaypointIndex++;
-            if (currentWaypointIndex >= path.Count)
-            {
+            if(currentWaypointIndex >= path.Count){
+                // Again just follow player if no more waypoints
                 float dx = player.position.x - transform.position.x;
-                if (Mathf.Abs(dx) < 0.1f)
-                    dx = lastHorizontalDir;
-                else
-                    lastHorizontalDir = Mathf.Sign(dx);
+                if(Mathf.Abs(dx) < 0.1f) dx = lastHorizontalDir;
+                else lastHorizontalDir = Mathf.Sign(dx);
                 currentDirection = new Vector2(Mathf.Sign(dx), 0);
                 return;
             }
@@ -182,36 +140,31 @@ public class BossAI : MonoBehaviour
             toWaypoint = targetWaypoint - (Vector2)transform.position;
         }
 
-        // Consider horizontal direction.
+        // Figure out which direction to move based on waypoint/player location
         float horizontalDiff = targetWaypoint.x - transform.position.x;
-        if (Mathf.Abs(horizontalDiff) < 0.1f)
-        {
-            // If the player is above, maintain the last horizontal direction.
-            if (player.position.y - transform.position.y > verticalPursuitThreshold)
+        if(Mathf.Abs(horizontalDiff) < 0.1f){
+            // If directly below player, keep last direction
+            if(player.position.y - transform.position.y > verticalPursuitThreshold){
                 horizontalDiff = lastHorizontalDir;
-            else
-            {
+            }else{
                 horizontalDiff = player.position.x - transform.position.x;
-                if (Mathf.Abs(horizontalDiff) < 0.1f)
+                if(Mathf.Abs(horizontalDiff) < 0.1f){
                     horizontalDiff = lastHorizontalDir;
+                }
             }
-        }
-        else
-        {
+        }else{
             lastHorizontalDir = Mathf.Sign(horizontalDiff);
         }
 
-        // Force movement toward the player if directions conflict.
+        // Make sure we don't go the wrong way if the player is clearly on the other side
         float playerDiff = player.position.x - transform.position.x;
-        if (Mathf.Abs(playerDiff) > 0.1f && Mathf.Sign(horizontalDiff) != Mathf.Sign(playerDiff))
-        {
+        if(Mathf.Abs(playerDiff) > 0.1f && Mathf.Sign(horizontalDiff) != Mathf.Sign(playerDiff)){
             horizontalDiff = playerDiff;
             lastHorizontalDir = Mathf.Sign(playerDiff);
         }
 
-        // If an overhead obstacle exists and the player is above, choose a clearance direction.
-        if (IsObstructedAbove(overheadDetectionRadius) && player.position.y > transform.position.y)
-        {
+        // If blocked overhead, try to move left/right
+        if(IsObstructedAbove(overheadDetectionRadius) && player.position.y > transform.position.y){
             int clearanceDir = GetClearanceDirection();
             horizontalDiff = clearanceDir;
         }
@@ -219,134 +172,82 @@ public class BossAI : MonoBehaviour
         currentDirection = new Vector2(Mathf.Sign(horizontalDiff), 0);
     }
 
-    /// <summary>
-    /// Decides whether the boss should jump.
-    /// </summary>
     private bool ShouldJump()
     {
-        // Respect jump cooldown, ensure the boss is grounded, and not already moving vertically.
-        if (Time.time < lastJumpTime + jumpCooldown)
-            return false;
-        if (!IsGrounded())
-            return false;
-        if (Mathf.Abs(rb.linearVelocity.y) >= 0.1f)
-            return false;
+        // Check if:
+        // - cooldown is over
+        // - we're grounded
+        // - we're not already going up or down
+
+        if(Time.time < lastJumpTime + jumpCooldown) return false;
+        if(!IsGrounded()) return false;
+        if(Mathf.Abs(rb.linearVelocity.y) >= 0.1f) return false;
 
         float verticalDiff = 0f;
         float horizontalDiff = 0f;
 
-        // Check the current waypoint if available.
-        if (path != null && currentWaypointIndex < path.Count)
-        {
+        // Check difference in position if path exists
+        if(path != null && currentWaypointIndex < path.Count){
             Vector2 targetWaypoint = path[currentWaypointIndex];
             verticalDiff = targetWaypoint.y - transform.position.y;
             horizontalDiff = Mathf.Abs(targetWaypoint.x - transform.position.x);
         }
 
-        // Conditions to jump:
-        // a) The player is above by at least the vertical pursuit threshold.
+        // Jump if:
+        // - Player is high above
+        // - Waypoint is high above
+        // - We're at the edge of a platform (no ground ahead)
+        // - There's something blocking us above
         bool playerAbove = (player.position.y - transform.position.y) > verticalPursuitThreshold;
-        // b) The current waypoint (if any) is above.
         bool waypointAbove = verticalDiff > verticalPursuitThreshold;
-        // c) There is no ground ahead (potentially at a platform edge).
         bool noGroundAhead = !IsGroundAhead();
-        // d) There is an obstacle overhead.
         bool overheadObstacle = IsObstructedAbove(overheadDetectionRadius);
 
         return playerAbove || waypointAbove || noGroundAhead || overheadObstacle;
     }
 
-    /// <summary>
-    /// Applies an upward jump force.
-    /// </summary>
     private void Jump()
     {
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         lastJumpTime = Time.time;
     }
 
-    /// <summary>
-    /// Returns true if the boss is grounded.
-    /// </summary>
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
-    /// <summary>
-    /// Checks for ground in front of the boss by raycasting from the ground check.
-    /// </summary>
+    // Raycast ahead of the boss to see if there's ground coming up (used to detect edges)
     private bool IsGroundAhead()
     {
         Vector2 origin = groundCheck.position;
         Vector2 direction = new Vector2(currentDirection.x, 0);
-        float distance = 0.3f; // Adjust as needed.
+        float distance = 0.3f;
         return Physics2D.Raycast(origin, direction, distance, groundLayer);
     }
 
-    /// <summary>
-    /// Checks for obstacles above the boss using a configurable radius.
-    /// </summary>
+    // Check if there's something above the boss
     private bool IsObstructedAbove(float checkRadius)
     {
         Vector2 origin = (Vector2)transform.position + Vector2.up * (groundCheckRadius + 0.1f);
         return Physics2D.OverlapCircle(origin, checkRadius, groundLayer);
     }
 
-    /// <summary>
-    /// Determines which horizontal direction (left/right) is clearer to navigate around an overhead platform.
-    /// Uses raycasts with an elevated Y offset.
-    /// </summary>
+    // Figure out whether it's easier to go left or right around a platform above the boss
     private int GetClearanceDirection()
     {
         Vector2 rayOrigin = (Vector2)transform.position + new Vector2(0, clearanceRayYOffset);
-        // Raycast to the right.
-        RaycastHit2D hitRight = Physics2D.Raycast(rayOrigin, Vector2.right, clearanceRayDistance, groundLayer);
-        // Raycast to the left.
-        RaycastHit2D hitLeft = Physics2D.Raycast(rayOrigin, Vector2.left, clearanceRayDistance, groundLayer);
 
-        if (hitRight.collider == null && hitLeft.collider != null)
-        {
+        RaycastHit2D hitRight = Physics2D.Raycast(rayOrigin, Vector2.right, clearanceRayDistance, groundLayer);
+        RaycastHit2D hitLeft  = Physics2D.Raycast(rayOrigin, Vector2.left,  clearanceRayDistance, groundLayer);
+
+        if(hitRight.collider == null && hitLeft.collider != null){
             return 1;
-        }
-        else if (hitLeft.collider == null && hitRight.collider != null)
-        {
+        }else if(hitLeft.collider == null && hitRight.collider != null){
             return -1;
-        }
-        else if (hitLeft.collider == null && hitRight.collider == null)
-        {
-            // Both sides are clear; default to moving toward the player's horizontal position.
+        }else if(hitLeft.collider == null && hitRight.collider == null){
             float dx = player.position.x - transform.position.x;
             return Mathf.Abs(dx) > 0.1f ? (int)Mathf.Sign(dx) : (int)lastHorizontalDir;
-        }
-        else
-        {
-            // Both sides appear blocked; stick to previous direction.
-            return (int)lastHorizontalDir;
-        }
-    }
-
-    void Attack()
-    {
-        Debug.Log("Boss is attacking the player!");
-        // Insert attack logic here.
-    }
-
-    // Debug visualization for path waypoints.
-    void OnDrawGizmos()
-    {
-        if (path != null)
-        {
-            Gizmos.color = Color.green;
-            foreach (Vector2 point in path)
-            {
-                Gizmos.DrawSphere(point, 0.1f);
-            }
-            if (currentWaypointIndex < path.Count)
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawSphere(path[currentWaypointIndex], 0.15f);
-            }
-        }
+        }else return (int)lastHorizontalDir;
     }
 }
