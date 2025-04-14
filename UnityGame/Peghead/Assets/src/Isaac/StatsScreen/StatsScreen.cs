@@ -54,7 +54,7 @@ public class StatsScreen : MonoBehaviour
         }
     };
 
-    void Awake()
+    void Start()
     {
         string levelName = SceneManager.GetActiveScene().name;
         
@@ -64,16 +64,14 @@ public class StatsScreen : MonoBehaviour
             levelName = levelName
         };
 
+        playerHealth = FindFirstObjectByType<PlayerHealth>();
+
         newLevelResult = new LevelResult {
-            levelName = levelName
+            levelName = levelName,
+            lives = playerHealth.GetMaxLives()
         };
 
         PlayerHealth.OnLivesChanged += OnPlayerLivesChanged;
-    }
-
-    void Start()
-    {
-        playerHealth = FindFirstObjectByType<PlayerHealth>();
 
         /*
         // Test 3 lives
@@ -208,7 +206,7 @@ public class StatsScreen : MonoBehaviour
 
         hpBonusText.rightText = newLevelResult.lives.ToString();
         if (livesBetter) {
-            hpBonusText.rightText = newLevelResult.lives.ToString();
+            hpBonusText.rightTextColor = yellowColor;
         }
 
         gradeText.rightText = newGradeResult.grade;

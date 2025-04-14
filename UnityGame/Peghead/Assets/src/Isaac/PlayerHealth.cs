@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
 
     public static event Action<int> OnLivesChanged;
     public static event Action OnPlayerDied;
+    private bool bcMode = false;
 
     private void Awake()
     {
@@ -17,7 +18,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage()
     {
-        if (currentLives <= 0) return;
+        if (currentLives <= 0 || bcMode) return;
 
         currentLives--;
         
@@ -42,6 +43,11 @@ public class PlayerHealth : MonoBehaviour
     {
         currentLives = maxLives;
         NotifyUI();
+    }
+
+    public void ToggleBC()
+    {
+        bcMode = !bcMode;
     }
 
     private void Die()

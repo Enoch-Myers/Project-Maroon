@@ -5,9 +5,11 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenuUI;
+    private PlayerHealth playerHealth;
 
     void Start()
     {
+        playerHealth = FindFirstObjectByType<PlayerHealth>();
         pauseMenuUI.SetActive(false);
 
         // Loop through all child objects under the "Options" parent
@@ -56,6 +58,10 @@ public class PauseMenu : MonoBehaviour
             case "Exit":
                 Resume();
                 SceneLoader.Instance.LoadSceneAsync("LevelSelect");
+                break;
+            case "Toggle BC":
+                playerHealth.ToggleBC();
+                Resume();
                 break;
             default:
                 break;

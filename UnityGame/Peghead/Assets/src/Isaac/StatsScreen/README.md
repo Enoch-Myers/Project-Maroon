@@ -6,14 +6,11 @@ This class is a component of the `StatsScreen` prefab. The `StatsScreen` prefab 
 
 Upon the `StatsScreen` prefab being added to the scene, this class does the following:
 
-In `StatsScreen.Awake()`
+In `StatsScreen.Start()`
 
 1. Queries the best result from saved data for the current level into `bestLevelResult`.
 2. Initializes `newLevelResult` with default values for the upcoming result of the current level.
 3. Subscribes to the `PlayerHealth.OnLivesChanged` event to automatically update the `newLevelResult.lives` statistic whenever the player loses a life.
-
-In `StatsScreen.Start()`
-
 4. Hides the `StatsScreen` ui because it should not be visible until the player reaches the end of a level.
 
 In `StatsScreen.Update()`
