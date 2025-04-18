@@ -1,10 +1,6 @@
 using UnityEngine;
 
-<<<<<<< Updated upstream
 // Stage 1 Boss
-=======
-// Static Stage 1 Boss
->>>>>>> Stashed changes
 public class BaseBoss1
 {
     public Transform player;
