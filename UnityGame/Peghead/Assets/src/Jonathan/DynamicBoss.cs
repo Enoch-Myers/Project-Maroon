@@ -1,62 +1,66 @@
 using UnityEngine;
 
-// Parent class
-public class BaseBoss : MonoBehaviour
+// Stage 1 Boss
+public class BaseBoss1
 {
     public Transform player;
     public float speed = 2f;
     public int maxHealth = 100;
     public int currentHealth;
 
-    // Unity calls Start() automatically if this component is enabled.
-    public virtual void Start()
+    public BaseBoss1(Transform player, float speed, int maxHealth)
     {
-        currentHealth = maxHealth;
+        this.player = player;
+        this.speed = speed;
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth;
     }
 
-    // Unity calls Update() automatically each frame.
-    public virtual void Update()
+    public virtual void UpdateLogic(Transform bossTransform, float deltaTime, string bossName)
     {
-        if (player != null)
-        {
-            // Basic horizontal movement toward the player.
-            if (transform.position.x < player.position.x)
-            {
-                transform.position += Vector3.right * speed * Time.deltaTime;
-            }
-            else if (transform.position.x > player.position.x)
-            {
-                transform.position += Vector3.left * speed * Time.deltaTime;
+        if(player != null){
+            float bossX = bossTransform.position.x;
+            float playerX = player.position.x;
+
+            if(bossX < playerX){
+                bossTransform.position += Vector3.right * speed * deltaTime;
+            }else if(bossX > playerX){
+                bossTransform.position += Vector3.left * speed * deltaTime;
             }
         }
     }
 
-    // Virtual method for taking damage.
-    public virtual void TakeDamage(int damageAmount)
+    public virtual void TakeDamage(int damageAmount, string bossName)
     {
         currentHealth -= damageAmount;
-        if (currentHealth < 0)
-            currentHealth = 0;
+        if(currentHealth < 0) currentHealth = 0;
 
-        if (currentHealth == 0)
-            Debug.Log("Boss defeated: " + gameObject.name);
+        if(currentHealth == 0){
+            Debug.Log("Boss defeated: " + bossName);
+        }
     }
 }
 
-// Stage Two boss – inherits from BaseBoss and overrides some functionality.
-public class BStage2 : BaseBoss
+// Stage 2 Dynamic Boss
+public class BossStage2 : BaseBoss1
 {
-    // Override to take only half damage.
-    public override void TakeDamage(int damageAmount)
+    public BossStage2(Transform player, float speed, int maxHealth)
+        : base(player, speed, maxHealth)
+        { }
+
+    public override void TakeDamage(int damageAmount, string bossName)
     {
-        int actualDamage = Mathf.FloorToInt(damageAmount * 0.5f); // Half damage
-        base.TakeDamage(actualDamage);
+        // Half damage
+        int actualDamage = Mathf.FloorToInt(damageAmount * 0.5f);
+        base.TakeDamage(actualDamage, bossName);
     }
 
-    // Optionally override Update() for additional behavior.
-    public override void Update()
+    public override void UpdateLogic(Transform bossTransform, float deltaTime, string bossName)
     {
-        base.Update();
-        // Additional logic for stage two (e.g., better pathing) can be added here.
+        // Better Pathing
+        if(player != null){
+            Vector3 targetPosition = new Vector3(player.position.x, bossTransform.position.y, bossTransform.position.z);
+            bossTransform.position = Vector3.Lerp(bossTransform.position, targetPosition, speed * deltaTime);
+        }
     }
 }
