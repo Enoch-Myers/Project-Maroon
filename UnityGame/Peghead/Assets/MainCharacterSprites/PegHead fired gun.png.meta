@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f47ea9a3dff2ef34bb27ac2962682e7b
+guid: 96ab3c4210700ed499fe480991eb9269
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 110663267200952692
-    second: Bullet (2)_0
+      213: -6117174123408230748
+    second: PegHead fired gun_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Bullet (2)_0
+      name: PegHead fired gun_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 88
-        width: 927
-        height: 835
+        x: 0
+        y: 0
+        width: 1024
+        height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 479623bb7a7298100800000000000000
-      internalID: 110663267200952692
+      spriteID: 4a67a018b8e6b1ba0800000000000000
+      internalID: -6117174123408230748
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Bullet (2)_0: 110663267200952692
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

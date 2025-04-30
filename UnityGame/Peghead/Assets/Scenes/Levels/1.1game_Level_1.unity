@@ -2175,16 +2175,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7.5
-  dashSpeed: 15
+  dashSpeed: 25
   dashTime: 0.25
   deceleration: 1
   Move: 0
-  Jump: 400
+  Jump: 650
   isJumping: 0
   rb: {fileID: 0}
   isTouchingWall: 0
   projectilePrefab: {fileID: 1655353143}
   firePoint: {fileID: 448240579}
+  defaultSprite: {fileID: -8716476780639031448, guid: 1aa3edc2611170b47be30b5416258584, type: 3}
+  firingSprite: {fileID: -6117174123408230748, guid: 96ab3c4210700ed499fe480991eb9269, type: 3}
+  fireSpriteDuration: 0.1
+  groundRayLength: 0.1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!212 &217803063
 SpriteRenderer:
   m_ObjectHideFlags: 0

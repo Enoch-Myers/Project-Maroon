@@ -19,14 +19,35 @@ public class player_movement : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform firePoint; 
 
+    public Sprite defaultSprite;
+    public Sprite firingSprite;
+    public float fireSpriteDuration = 0.1f;
+
+    public float groundRayLength = 0.1f;
+    public LayerMask groundLayer;
+
+    private SpriteRenderer sr;
+
+    public Animator animator;
+
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>(); // 👈 Automatically find the Animator on start
     }
+
 
     public void Update()
     {
+        // Raycast straight down from player's feet to check for ground
+        Vector2 rayOrigin = new Vector2(transform.position.x, transform.position.y - 0.5f); // Adjust Y offset to match feet
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, groundRayLength, groundLayer);
+        bool isGrounded = hit.collider != null;
+        isJumping = !isGrounded;
+
         Move = Input.GetAxis("Horizontal");
 
         if (Move != 0)
@@ -39,21 +60,20 @@ public class player_movement : MonoBehaviour
             transform.localScale = localScale;
         }
 
-
         if (isDashing)
         {
             dashTimeLeft -= Time.deltaTime;
             if (dashTimeLeft <= 0)
             {
                 isDashing = false;
-                StartDeceleration();    // Decelerate from dash naturally
+                StartDeceleration(); // Decelerate from dash naturally
             }
         }
         else
         {
             rb.linearVelocity = new Vector2(speed * Move, rb.linearVelocity.y);
 
-            if (Input.GetButtonDown("Jump") && isJumping == false)
+            if (Input.GetButtonDown("Jump") && isGrounded)
             {
                 rb.AddForce(new Vector2(rb.linearVelocity.x, Jump));
                 Debug.Log("Jump");
@@ -69,8 +89,9 @@ public class player_movement : MonoBehaviour
         {
             Shoot();
         }
-
     }
+
+
 
     public void StartDash()
     {
@@ -107,7 +128,14 @@ public class player_movement : MonoBehaviour
         {
             isJumping = false;
         }
+
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            animator.SetTrigger("Hit");
+            Debug.Log("Player hit");
+        }
     }
+
 
     private void OnCollisionExit2D(Collision2D other)
     {
@@ -126,13 +154,21 @@ public class player_movement : MonoBehaviour
         {
             pb.direction = lastMoveDirection > 0 ? Vector2.right : Vector2.left;
         }
+
         // Flip the projectile's visual if needed
         Vector3 projectileScale = proj.transform.localScale;
         projectileScale.x = Mathf.Abs(projectileScale.x) * lastMoveDirection;
         proj.transform.localScale = projectileScale;
 
+        // 🔥 Switch to firing sprite
+        sr.sprite = firingSprite;
+        StartCoroutine(ResetSpriteAfterShot());
     }
-
+    IEnumerator ResetSpriteAfterShot()
+    {
+        yield return new WaitForSeconds(fireSpriteDuration);
+        sr.sprite = defaultSprite;
+    }
 
 
 }
