@@ -97,15 +97,24 @@ public class FlyingEnemy : EnemyAI
         canAttack = true;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player") && canAttack)
+        if (collision.collider.CompareTag("Player") && canAttack)
         {
             Debug.Log("Flying enemy triggered with the player!");
-            collision.GetComponent<PlayerHealth>()?.TakeDamage(); // Deal damage to the player
+            collision.collider.GetComponent<Player_Health>()?.TakeDamage(1); // Deal damage to the player
 
             // Start attack cooldown
             StartCoroutine(AttackCooldown());
+        }
+        if (collision.collider.CompareTag("Projectile")){
+            health--;
+            Debug.Log("bird damaged");
+            if (health <= 0)
+            {
+                Debug.Log("bird dead");
+                Destroy(gameObject);
+            }
         }
     }
 }

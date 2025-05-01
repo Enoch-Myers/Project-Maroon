@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+
+
 public class Blow_up_script : MonoBehaviour
 {
     Collider2D[] inExplosionRadius = null; // explosion radius collider2d
-
+    public GameObject ExplosionEffectPrefab;
     [SerializeField] private float ExplosionForceMulti = 1000;
     [SerializeField] private float ExplosionRadius = 15;
 
@@ -20,11 +22,30 @@ public class Blow_up_script : MonoBehaviour
 
         }
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Barrel collided");
+
+        if (collision.collider.CompareTag("Player") || collision.collider.CompareTag("Projectile"))
+        {
+            Debug.Log("that bih blew up");
+            Explode();
+        }
+        if (collision.collider.CompareTag("Player"))
+        {
+            Player_Health playerHealth = collision.collider.GetComponent<Player_Health>();
+
+            if (playerHealth != null)
+            {
+                playerHealth.currentHealth = 0;
+            }
+        }
+    }
     void Explode()
     {
         inExplosionRadius = Physics2D.OverlapCircleAll(transform.position, ExplosionRadius);
 
-        foreach(Collider2D other in inExplosionRadius)
+        foreach (Collider2D other in inExplosionRadius)
         {
             Rigidbody2D o_rb = other.GetComponent<Rigidbody2D>();
             if (o_rb != null)
@@ -37,6 +58,8 @@ public class Blow_up_script : MonoBehaviour
                 }
             }
         }
+        Instantiate(ExplosionEffectPrefab, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 
     private void OnDrawGizmos() // draw gizmos

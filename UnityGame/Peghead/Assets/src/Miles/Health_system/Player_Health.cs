@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player_Health : MonoBehaviour
 {
@@ -15,12 +16,14 @@ public class Player_Health : MonoBehaviour
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
-        if(currentHealth <= 0)
-            {
-                // Player death // Respawn or game over screen
-                Debug.Log("Player dead");
+        Debug.Log("Player took damageCurrent health:" + currentHealth);
+        if (currentHealth <= 0)
+        {
+            // Player death // Respawn or game over screen
+            Debug.Log("Player dead");
+            SceneManager.LoadScene("TitleScreen");
 
-            }
+        }
     }
     // Heals player
     public void HealPlayer(int amount)

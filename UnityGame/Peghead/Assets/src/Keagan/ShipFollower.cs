@@ -35,11 +35,11 @@ public class ShipFollower : MonoBehaviour
 
         transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * followSpeed);
 
-        // Flip sprite based on movement direction
+        // flip sprite based on movement direction
         float deltaX = nodePosition.x - lastTargetPosition.x;
         if (Mathf.Abs(deltaX) > 0.01f)
         {
-            spriteRenderer.flipX = deltaX < 0; // Face left if moving left
+            spriteRenderer.flipX = deltaX < 0; // if moving left, face left
         }
 
         lastTargetPosition = nodePosition;

@@ -11,6 +11,7 @@ public class player_attack_controller : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log("player shot");
             Instantiate(ProjectilePrefab, launchOffset.position, transform.rotation);
         }
     }

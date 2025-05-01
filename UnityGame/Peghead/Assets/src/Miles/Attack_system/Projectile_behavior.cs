@@ -13,6 +13,7 @@ public class Projectile_behavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("bullet dead");
         Destroy(gameObject);
     }
 }

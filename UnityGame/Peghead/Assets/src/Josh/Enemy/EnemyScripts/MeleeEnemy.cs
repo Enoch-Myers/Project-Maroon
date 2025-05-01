@@ -9,19 +9,29 @@ public class MeleeEnemy : EnemyAI
     public float attackCooldown = 1.5f; // Cooldown between attacks
     private bool canAttack = true; // Tracks if the enemy can attack
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player") && canAttack)
+        if (collision.collider.CompareTag("Player") && canAttack)
         {
-            AttackPlayer(collision);
+            AttackPlayer(collision.collider);
+        }
+        if (collision.collider.CompareTag("Projectile"))
+        {
+            health--;
+            Debug.Log("Enemy Damaged");
+
+            if (health <= 0)
+            {
+                Debug.Log("Enemy killed");
+                Destroy(gameObject);
+            }
         }
     }
-
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player") && canAttack)
+        if (collision.collider.CompareTag("Player") && canAttack)
         {
-            AttackPlayer(collision);
+            AttackPlayer(collision.collider);
         }
     }
 
@@ -29,7 +39,7 @@ public class MeleeEnemy : EnemyAI
     {
         // Deal damage to the player
         Debug.Log("Player hit by melee attack!");
-        playerCollider.GetComponent<PlayerHealth>()?.TakeDamage();
+        playerCollider.GetComponent<Player_Health>()?.TakeDamage(1);
 
         // Start cooldown
         StartCoroutine(AttackCooldown());
