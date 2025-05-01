@@ -282,7 +282,7 @@ MonoBehaviour:
   right: {fileID: 1183684484}
   levelID: 2
   isSelected: 0
-  isLocked: 1
+  isLocked: 0
   levelDisplayName: The CEO's Private Beach
 --- !u!50 &473346299
 Rigidbody2D:
@@ -765,7 +765,7 @@ MonoBehaviour:
   right: {fileID: 2000765791}
   levelID: 1
   isSelected: 0
-  isLocked: 1
+  isLocked: 0
   levelDisplayName: Hitching a Ride
 --- !u!50 &1183684485
 Rigidbody2D:
@@ -1241,7 +1241,7 @@ MonoBehaviour:
   right: {fileID: 473346298}
   levelID: 3
   isSelected: 0
-  isLocked: 1
+  isLocked: 0
   levelDisplayName: Office Showdown
 --- !u!50 &1667276628
 Rigidbody2D:
